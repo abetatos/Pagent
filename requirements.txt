@@ -1,0 +1,58 @@
+# Pagent - Sistema Multi-Agente para Escritura de Libros
+# Dependencias del proyecto
+
+# Core dependencies
+# ==================
+
+# Ninguna dependencia externa obligatoria para el core
+# El sistema funciona con Python stdlib
+
+# Optional dependencies para integración con LLMs
+# ===============================================
+
+# Para integración con OpenAI GPT
+# openai>=1.0.0
+
+# Para integración con Anthropic Claude
+# anthropic>=0.8.0
+
+# Para integración con Google Gemini
+# google-generativeai>=0.3.0
+
+# Para modelos locales (Ollama, LM Studio, etc.)
+# requests>=2.31.0
+
+# Optional dependencies para mejoras
+# ==================================
+
+# Para verificación gramatical
+# language-tool-python>=2.7.0
+
+# Para análisis de texto
+# nltk>=3.8.0
+# spacy>=3.7.0
+
+# Para exportación a diferentes formatos
+# python-docx>=1.0.0  # Para exportar a Word
+# reportlab>=4.0.0    # Para exportar a PDF
+# ebooklib>=0.18      # Para exportar a EPUB
+
+# Para interfaz web (opcional)
+# flask>=3.0.0
+# fastapi>=0.104.0
+# uvicorn>=0.24.0
+
+# Development dependencies
+# ========================
+
+# pytest>=7.4.0
+# pytest-cov>=4.1.0
+# black>=23.0.0
+# flake8>=6.1.0
+# mypy>=1.7.0
+
+# Documentation
+# =============
+
+# sphinx>=7.2.0
+# sphinx-rtd-theme>=2.0.0

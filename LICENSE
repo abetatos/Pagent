@@ -1,0 +1,167 @@
+LICENCIA RESTRICTIVA DE SOFTWARE PROPIETARIO
+===========================================
+
+Copyright (c) 2026 Pagent Team. Todos los derechos reservados.
+
+TÉRMINOS Y CONDICIONES
+
+1. DEFINICIONES
+
+   "Software" se refiere al sistema Pagent y todo el código fuente,
+   documentación, archivos y recursos asociados contenidos en este repositorio.
+
+   "Licenciante" se refiere a Pagent Team, los propietarios del copyright del Software.
+
+   "Usuario" se refiere a cualquier persona o entidad que acceda al Software.
+
+2. CONCESIÓN DE DERECHOS LIMITADOS
+
+   Sujeto a los términos de esta licencia, el Licenciante concede al Usuario
+   un derecho limitado, no exclusivo, no transferible y revocable para:
+
+   a) VISUALIZAR el código fuente del Software con fines educativos y de aprendizaje.
+
+   b) EJECUTAR el Software en un entorno local personal únicamente con fines
+      instructivos, de prueba y aprendizaje no comercial.
+
+   c) ESTUDIAR el funcionamiento interno del Software para propósitos educativos.
+
+3. RESTRICCIONES
+
+   El Usuario NO está autorizado a:
+
+   a) DISTRIBUIR, sublicenciar, vender, alquilar, prestar o transferir el Software
+      o cualquier parte del mismo a terceros, en cualquier forma o medio.
+
+   b) USAR el Software con fines comerciales, incluyendo pero no limitado a:
+      - Generar ingresos directos o indirectos
+      - Ofrecer servicios basados en el Software
+      - Integrar el Software en productos o servicios comerciales
+      - Utilizar el Software en entornos de producción empresarial
+
+   c) MODIFICAR, adaptar, traducir o crear obras derivadas del Software
+      para su redistribución, comercialización o uso público.
+
+   d) REALIZAR ingeniería inversa, descompilar o desensamblar el Software,
+      excepto en la medida expresamente permitida por la ley aplicable.
+
+   e) ELIMINAR, alterar u ocultar cualquier aviso de copyright, marca registrada
+      u otros avisos de derechos de propiedad en el Software.
+
+   f) PUBLICAR, copiar o redistribuir el Software o cualquier parte del mismo
+      en repositorios públicos, sitios web, redes sociales o cualquier otro medio.
+
+   g) USAR el Software de cualquier manera que viole leyes locales, estatales,
+      nacionales o internacionales.
+
+4. PROPIEDAD INTELECTUAL
+
+   El Software es propiedad del Licenciante y está protegido por leyes de
+   copyright y otras leyes de propiedad intelectual. El Licenciante retiene
+   todos los derechos, títulos e intereses en y sobre el Software, incluyendo
+   todos los derechos de propiedad intelectual relacionados.
+
+5. USO EDUCATIVO E INSTRUCTIVO
+
+   Se permite explícitamente:
+
+   a) Ejecutar el Software en entornos locales para aprender su funcionamiento.
+
+   b) Estudiar el código fuente para comprender técnicas de programación y
+      arquitecturas de software.
+
+   c) Realizar pruebas y experimentos personales sin fines comerciales.
+
+   d) Crear capturas de pantalla y documentación personal del funcionamiento
+      del Software para propósitos de estudio.
+
+   IMPORTANTE: Cualquier uso educativo debe ser estrictamente personal y
+   no comercial. No se permite compartir, publicar o distribuir el Software
+   incluso con fines educativos.
+
+6. LICENCIAS COMERCIALES
+
+   Para obtener derechos de uso comercial, distribución, modificación o cualquier
+   uso no cubierto por esta licencia, debe contactar al Licenciante para negociar
+   una licencia comercial separada.
+
+   Contacto para licencias comerciales: [correo electrónico del licenciante]
+
+7. GARANTÍAS Y LIMITACIÓN DE RESPONSABILIDAD
+
+   EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO,
+   EXPRESA O IMPLÍCITA, INCLUYENDO PERO NO LIMITADO A GARANTÍAS DE
+   COMERCIABILIDAD, IDONEIDAD PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN.
+
+   EN NINGÚN CASO EL LICENCIANTE SERÁ RESPONSABLE POR NINGÚN RECLAMO, DAÑO
+   U OTRA RESPONSABILIDAD, YA SEA EN UNA ACCIÓN CONTRACTUAL, AGRAVIO O DE
+   OTRO TIPO, QUE SURJA DE, FUERA DE O EN CONEXIÓN CON EL SOFTWARE O EL
+   USO U OTROS TRATOS EN EL SOFTWARE.
+
+   El Usuario asume todo el riesgo asociado con el uso del Software.
+
+8. TERMINACIÓN
+
+   Esta licencia es efectiva hasta que sea terminada. Los derechos del Usuario
+   bajo esta licencia terminarán automáticamente sin aviso del Licenciante si
+   el Usuario no cumple con cualquier término de esta licencia.
+
+   Tras la terminación, el Usuario debe cesar todo uso del Software y destruir
+   todas las copias del Software en su posesión o control.
+
+9. LEY APLICABLE Y JURISDICCIÓN
+
+   Esta licencia se regirá e interpretará de acuerdo con las leyes de
+   [jurisdicción aplicable], sin tener en cuenta sus disposiciones sobre
+   conflictos de leyes.
+
+   Cualquier disputa que surja de o en relación con esta licencia estará
+   sujeta a la jurisdicción exclusiva de los tribunales de [jurisdicción aplicable].
+
+10. DISPOSICIONES GENERALES
+
+    a) Esta licencia constituye el acuerdo completo entre el Usuario y el
+       Licenciante con respecto al Software.
+
+    b) Si alguna disposición de esta licencia se considera inválida o inaplicable,
+       las disposiciones restantes continuarán en pleno vigor y efecto.
+
+    c) El Licenciante se reserva el derecho de modificar esta licencia en
+       cualquier momento. Los cambios entrarán en vigor inmediatamente después
+       de su publicación.
+
+    d) La renuncia del Licenciante a hacer cumplir cualquier derecho bajo
+       esta licencia no constituirá una renuncia a ese derecho en el futuro.
+
+11. ACEPTACIÓN
+
+    Al acceder, descargar, copiar o usar el Software de cualquier manera,
+    el Usuario acepta estar sujeto a los términos de esta licencia.
+
+    Si el Usuario no acepta estos términos, no está autorizado a usar el Software
+    y debe eliminar inmediatamente cualquier copia del mismo.
+
+================================================================================
+
+RESUMEN (NO LEGALMENTE VINCULANTE - VER TÉRMINOS COMPLETOS ARRIBA):
+
+✅ PERMITIDO:
+   - Visualizar el código fuente
+   - Ejecutar localmente para aprendizaje
+   - Estudiar con fines educativos
+   - Probar en entorno personal no comercial
+
+❌ NO PERMITIDO:
+   - Uso comercial de cualquier tipo
+   - Distribución o redistribución
+   - Modificación para redistribución
+   - Publicación en cualquier medio
+   - Uso en producción
+   - Crear servicios basados en el Software
+
+================================================================================
+
+Para consultas sobre licencias o permisos especiales:
+Contacto: [tu-email@ejemplo.com]
+
+Última actualización: 15 de enero de 2026
