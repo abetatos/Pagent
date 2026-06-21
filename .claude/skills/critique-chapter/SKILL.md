@@ -85,7 +85,7 @@ Go through these checks in order. For each, write a finding (or
 10. **Opening / ending.** Did the chapter start in a non-cliché way
     (not waking up, not battle, not prophecy)? Does it end on the
     transition out specified in the beat sheet?
-11. **Sanderson laws.** Magic used in this chapter — does its
+11. **Hard-magic laws.** Magic used in this chapter — does its
     capability match what the reader has seen? Are costs visible?
     `MUST fix` violations.
 12. **Dialogue.** Random spot-check 3 lines of dialogue. Does each

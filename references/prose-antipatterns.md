@@ -78,7 +78,7 @@ shaped around them.
   the transition or use a clean scene break.
 - **Emotional whiplash.** Grief to action in one paragraph. Emotions
   need at least a held moment to land.
-- **Magic without cost.** Already covered in sanderson-laws.md but
+- **Magic without cost.** Already covered in hard-magic-laws.md but
   worth re-saying: every significant magic use shows its price in
   the prose.
 

@@ -81,7 +81,7 @@ Open `setup.md` and walk the user through each section, in this order
     overturn, all-is-lost, climax decision, resolution costs.
 11. **Subplots.** 1-3, each with theme that differs from main.
 12. **POV.** Number, default character, distribution.
-13. **Sanderson-slow specifics.** Sensory anchors that recur. Texture
+13. **Slow-immersion specifics.** Sensory anchors that recur. Texture
     beats budget per chapter.
 14. **Prose constraints.** Voice, distance, register, allowed/forbidden tics.
 15. **If continuation.** Inherited threads, returning characters,

@@ -34,6 +34,9 @@ from pathlib import Path
 
 CHAPTER_HEADER_RE = re.compile(r"^###\s+(?:Chapter|Cap|Capítulo)\s+(\d+)", re.MULTILINE | re.IGNORECASE)
 ACT_HEADER_RE = re.compile(r"^##\s+(?:Act|Acto)\s+(\d+)", re.MULTILINE | re.IGNORECASE)
+# Any H2 header — used to terminate a chapter slice cleanly even when the
+# next section is "## Midpoint" / "## Master truths" instead of "## Act N".
+ANY_H2_RE = re.compile(r"^##\s+", re.MULTILINE)
 
 
 def load_shadow(shadow_path: Path) -> str:
@@ -102,10 +105,11 @@ def chapter_section(shadow_text: str, chapter: int) -> str:
         if int(m.group(1)) == chapter:
             start = m.start()
             end = headers[i + 1].start() if i + 1 < len(headers) else len(shadow_text)
-            # End before the next act header if it appears first
-            next_act = ACT_HEADER_RE.search(shadow_text, m.end())
-            if next_act and next_act.start() < end:
-                end = next_act.start()
+            # End at the next H2 (any kind: Act / Midpoint / Master truths)
+            # if it appears before the next chapter header.
+            next_h2 = ANY_H2_RE.search(shadow_text, m.end())
+            if next_h2 and next_h2.start() < end:
+                end = next_h2.start()
             return shadow_text[start:end].strip()
     return ""
 

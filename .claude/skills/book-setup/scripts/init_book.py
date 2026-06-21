@@ -44,7 +44,7 @@ SETUP_TEMPLATE = """# Book setup — {title}
 - **Words per chapter:** 8000-12000
 - **Total target:** ~250k words
 - **Act structure:** Act 1 (ch 1-7) · Act 2 (ch 8-18, midpoint ch 13) · Act 3 (ch 19-25)
-- **Pace:** Sanderson-slow first act — dwelling on daily life, world texture, magic in mundane use.
+- **Pace:** slow-immersion first act — dwelling on daily life, world texture, magic in mundane use.
 
 ## Premise of world
 
@@ -178,7 +178,7 @@ SETUP_TEMPLATE = """# Book setup — {title}
 - **Distribution by chapter (rough):**
 - **POV switch rule:**
 
-## Sanderson-slow specifics
+## Slow-immersion specifics
 
 > What world textures will be **dwelt on** in the first act? List the
 > oficios, rituals, fauna, foods, places that will recur as anchors.

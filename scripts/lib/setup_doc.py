@@ -67,7 +67,9 @@ def find_int(text: str, label_substr: str) -> int | None:
     Searches case-insensitively. Returns None if not found.
     """
     pattern = re.compile(
-        r"(?:\*\*)?" + re.escape(label_substr) + r"(?:\*\*)?\s*[:\-]\s*([0-9]+)",
+        r"(?:\*\*)?"
+        + re.escape(label_substr)
+        + r"(?:\*\*)?\s*[:\-]\s*(?:\*\*)?\s*([0-9]+)",
         re.IGNORECASE,
     )
     m = pattern.search(text)

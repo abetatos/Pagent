@@ -82,7 +82,7 @@ ahead.
 
 Open `plan/outline.md` and inspect the act boundaries the script picked
 (based on chapter count). Confirm with the user:
-- Act 1 length feels right for a Sanderson-slow inhabitation?
+- Act 1 length feels right for a slow-immersion inhabitation?
 - Midpoint sits where the user wants the overturn?
 - Act 3 has enough room for the climax and resolution?
 

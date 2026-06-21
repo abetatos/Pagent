@@ -1,4 +1,7 @@
-# Sanderson's three laws of magic (adapted for this project)
+# The three laws of hard magic (adapted for this project)
+
+These are the load-bearing principles of rules-based ("hard") magic systems in
+epic fantasy, stated as working laws for this project.
 
 ## First law
 The author's ability to solve conflict with magic is **directly proportional**

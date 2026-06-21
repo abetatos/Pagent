@@ -117,7 +117,7 @@ Drafting plan inside your head before writing:
 
 While drafting, lean on:
 
-- **Sanderson's three laws** (`references/sanderson-laws.md`) — magic
+- **The three laws of hard magic** (`references/hard-magic-laws.md`) — magic
   works for what the rules permit, costs are visible, and the climax
   uses what's been seen.
 - **Dwelling techniques** (`references/dwelling-techniques.md`) —

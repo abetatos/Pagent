@@ -13,7 +13,7 @@ inside a moment**. The reader knows the events are happening because
 they are happening *to a body that the reader is borrowing*. The events
 land emotionally only insofar as the borrowed body felt them happen.
 
-Sanderson at his best (Way of Kings, Mistborn) dwells in three modes:
+The best slow-burn epic fantasy dwells in three modes:
 
 1. **Sensory anchoring.** Before a scene moves, the reader is *placed*.
    Light source, temperature, smell, posture, distance to walls. Two or
