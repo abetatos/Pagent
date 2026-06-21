@@ -80,6 +80,7 @@ Invoke a skill by name or just by describing the intent.
 | `update-canon` | Locks a chapter in: summary, seed statuses, new facts → canon. |
 | `compress-act` | Folds a finished act's summaries into one — seeds/shadow stay explicit. |
 | `search-corpus` | Targeted grep across canon → plan → summary → chapter. |
+| `compile-book` | Compiles the finished chapters into a Kindle-ready EPUB (and can email it to your Kindle). |
 | `write-novel` | Orchestrator: chains the per-chapter loop until the book is done. |
 
 ## Quickstart
@@ -114,6 +115,9 @@ write-novel --autopilot     # don't pause between chapters
 ```text
 .claude/skills/     the skills Claude invokes (SKILL.md + scripts/)
 scripts/lib/        deterministic Python helpers (stdlib only)
+scripts/build_epub.py    compile chapters → EPUB (via pandoc)
+scripts/send_to_kindle.py  email the EPUB to your Kindle
+scripts/assets/     reading stylesheet for the EPUB
 references/         craft references: beats, hard-magic laws, dwelling,
                     seed-craft, prose anti-patterns, magic checklist
 output/             generated books (git-ignored)
@@ -127,6 +131,7 @@ output/<series-slug>/
   series-state.md      rolling cross-book state
   book-NN/
     setup.md           source of truth for this book
+    assets/cover.jpg   book cover (fixed location, auto-embedded in EPUB)
     canon/             characters, factions, magic, world, timeline
     plan/              outline, shadow (writer-only), seeds, arcs
     chapters/NN.md     the prose
@@ -160,6 +165,66 @@ book's `summaries/book-summary.md` as context.
 Prose defaults to **Spanish (`es`)**. The skills and references run in English;
 the book comes out in whatever language `setup.md` declares — override it per
 book in the **Identity** section.
+
+## Reading on Kindle
+
+Once chapters exist, compile them into a single **EPUB** and read the draft
+on a real device — the best way to gather your own critiques and notes.
+
+```text
+compile the book          # runs compile-book → builds the EPUB
+export chapters 1-10      # partial draft to read what's done so far
+send it to my Kindle      # emails the EPUB to your @kindle.com address
+```
+
+Under the hood:
+
+```bash
+# Build output/<series>/book-NN/build/<slug>.epub
+python3 scripts/build_epub.py --series-slug <slug> --book-number <N>
+
+# Optionally email it to your Kindle
+python3 scripts/send_to_kindle.py --series-slug <slug> --book-number <N>
+```
+
+**Cover:** drop your cover image at the fixed path
+`output/<series>/book-NN/assets/cover.jpg` (or `.jpeg` / `.png`) and it's
+embedded automatically — same location for every book, no flags. Use a
+portrait JPEG/PNG around 1.6:1 (e.g. 1600×2560), no transparency.
+
+The EPUB contains **only the prose** — chapters in order, a title page and
+author from `setup.md`, a navigation TOC, and a reading stylesheet
+(`scripts/assets/epub.css`). Canon, plan, shadow, and seeds are never
+included (they're spoilers). Conversion is delegated to
+[**pandoc**](https://pandoc.org/) — install the static binary into
+`~/.local/bin` or `apt install pandoc`.
+
+### Send-to-Kindle setup
+
+Amazon's *Send to Kindle* delivers personal documents to your devices by
+email. Two one-time steps on Amazon's side, then config in `.env`:
+
+1. **Find your Kindle address.** *Manage Your Content and Devices →
+   Devices →* your Kindle → it ends in `@kindle.com`.
+2. **Approve your sender.** *Preferences → Personal Document Settings →
+   Approved Personal Document E-mail List →* add the email you'll send
+   *from*. Mail from any other address is silently dropped.
+3. **Configure `.env`** (copy `.env.example`; it's git-ignored):
+
+   ```ini
+   KINDLE_EMAIL=yourname_xxxxxx@kindle.com   # the destination
+   SMTP_HOST=smtp.gmail.com
+   SMTP_PORT=587
+   SMTP_USER=you@example.com                 # an approved sender
+   SMTP_PASS=your-app-password               # Gmail: an App Password
+   SMTP_FROM=                                # defaults to SMTP_USER
+   ```
+
+   For Gmail, generate an **App Password** (*Account → Security → App
+   Passwords*) — your normal login won't work over SMTP.
+
+Prefer no email? You can also drag the built `.epub` into the desktop/mobile
+**Send to Kindle** app, or upload it at *amazon.com/sendtokindle*.
 
 ## Design conventions
 

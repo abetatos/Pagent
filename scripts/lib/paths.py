@@ -10,6 +10,8 @@ Layout:
                 magic.md
             book-NN/
                 setup.md
+                assets/                # static assets for export
+                    cover.jpg          # book cover (jpg/jpeg/png) — fixed location
                 canon/                 # book-specific canon
                     characters.md
                     factions.md
@@ -64,6 +66,25 @@ class BookPaths:
     @property
     def setup_md(self) -> Path:
         return self.book_root / "setup.md"
+
+    @property
+    def assets_dir(self) -> Path:
+        return self.book_root / "assets"
+
+    # Cover lives at a fixed location: assets/cover.{jpg,jpeg,png}.
+    COVER_NAMES = ("cover.jpg", "cover.jpeg", "cover.png")
+
+    def cover_path(self) -> Path | None:
+        """The book cover image if present, else None.
+
+        Canonical location is `assets/cover.{jpg,jpeg,png}`, checked in
+        that priority order so there is exactly one place to drop it.
+        """
+        for name in self.COVER_NAMES:
+            p = self.assets_dir / name
+            if p.exists():
+                return p
+        return None
 
     @property
     def canon_dir(self) -> Path:
@@ -131,6 +152,7 @@ class BookPaths:
             self.series_root,
             self.series_canon_dir,
             self.book_root,
+            self.assets_dir,
             self.canon_dir,
             self.plan_dir,
             self.chapters_dir,
