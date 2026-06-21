@@ -1,0 +1,10 @@
+output/
+data/
+.env
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+.venv/
+.claude/settings.local.json

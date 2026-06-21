@@ -1,0 +1,263 @@
+---
+name: plan-book
+description: Turn an approved `setup.md` into the full plan a writer can execute against. Produces `plan/outline.md` (visible chapter beats), `plan/shadow.md` (writer-only hidden truth), `plan/seeds.md` (foreshadowing catalog), `plan/arcs.md` (character arcs), and the initial `canon/` files (characters, factions, magic, world, timeline). Use this after `book-setup` is complete and before the first chapter is written.
+---
+
+# plan-book
+
+You are running the **plan-book** skill. Your job is to take a finished
+`setup.md` and produce a planning bundle the chapter writer can execute
+against without ambiguity.
+
+## When to invoke
+
+- The user says "plan the book", "outline", "let's break this into
+  chapters", or "make the seed list".
+- `setup.md` exists at `output/<series>/book-NN/setup.md` and is
+  reasonably complete.
+
+## Hard rules
+
+- **Do not invent plot details the user has not approved.** Propose,
+  let them accept or rewrite. The plan is theirs.
+- **Shadow and seeds are sacred.** Write them in full. They will never
+  be compressed. If the user pushes you to "summarize the shadow", say
+  no — it loses its purpose.
+- **Every chapter outline must contain three beat types:** plot beats,
+  texture beats, subtext beats. A chapter that's only plot beats will
+  come out short and dry.
+- **Seeds are deterministic.** Every seed must have a `plant_in` chapter,
+  optional `echo_in` chapters, and a `payoff_in` chapter. The writer
+  consults the per-chapter envelope on every chapter.
+- **Use Spanish names for in-world content** (places, factions, magic
+  terms) unless the user has specified otherwise. Keep agent-facing
+  metadata in English.
+- The user can leave parts as `> TODO:` if they're not ready. The
+  chapter writer will refuse to start when a target chapter has a
+  TODO-only beat sheet.
+
+## Inputs you must read first
+
+- `output/<series>/book-NN/setup.md` — the source of truth.
+- `references/fantasy-beats.md` — three-act adapted structure, subplot
+  weaving, character arcs.
+- `references/seed-craft.md` — how to plant, echo, pay off without
+  telegraphing.
+- `references/magic-design-checklist.md` — only if magic still needs
+  detail.
+- If this is book N>1 of a series:
+  - `output/<series>/series.md`
+  - `output/<series>/series-state.md`
+  - `output/<series>/book-(N-1)/summaries/book-summary.md`
+
+## Steps
+
+### 1. Bootstrap the skeletons
+
+If `plan/outline.md` does not exist yet (or the user asks to "redo"
+the plan):
+
+```bash
+python3 .claude/skills/plan-book/scripts/bootstrap_plan.py \
+    --series-slug <slug> \
+    --book-number <N>
+```
+
+This reads `setup.md` and writes skeletons for:
+- `plan/outline.md` — one section per chapter with TODO bullets
+- `plan/shadow.md` — overview + act sections + per-chapter sections
+- `plan/seeds.md` — header + format reference (empty)
+- `plan/arcs.md` — one section per principal
+- `canon/characters.md`, `canon/factions.md`, `canon/magic.md`,
+  `canon/world.md`, `canon/timeline.md`
+
+If files already exist, the script refuses unless `--force` is passed.
+
+### 2. Plan in this order
+
+The order matters — each step depends on the prior one. Do not jump
+ahead.
+
+#### 2a. Confirm act structure
+
+Open `plan/outline.md` and inspect the act boundaries the script picked
+(based on chapter count). Confirm with the user:
+- Act 1 length feels right for a Sanderson-slow inhabitation?
+- Midpoint sits where the user wants the overturn?
+- Act 3 has enough room for the climax and resolution?
+
+If the user wants different boundaries, **edit the act headers in
+`outline.md` directly** before filling chapters.
+
+#### 2b. Fill the shadow timeline first
+
+Yes — *before* the outline. The shadow is the spine. Without it, the
+outline drifts.
+
+Walk the user through `shadow.md`:
+
+1. **Overview** — In 5-10 sentences, what is *really* happening behind
+   the surface story? What's the secret history?
+2. **Master truths** — 5-10 facts true in the world but not yet known
+   to the reader. Each has a "revealed in ch __" pointer.
+3. **Per act** — For each act, what does the antagonist (or fate, or
+   the world) know that the protagonist doesn't? What's the real cause
+   beneath the visible event?
+4. **Per chapter (skip chapters where there's no hidden layer)** —
+   what does this chapter look like vs. what's actually happening?
+
+Push back if the user offers "things just happen" — there must be a
+hidden mover. Even in low-mystery fantasy, the reader's understanding
+catches up to the writer's. Plan that gap.
+
+#### 2c. Build the seeds catalog
+
+Open `plan/seeds.md` and add seeds with the user. Each seed:
+
+- **id** — short stable handle (e.g., `boy-with-scar`, `copper-ring`,
+  `bell-at-sundown`). Used by the writer to mark planted/echoed/paid.
+- **Detail** — the concrete surface thing the reader sees.
+- **Real meaning** — what it actually signifies (hidden).
+- **Plant in** — chapter number.
+- **Echo in** — chapter numbers (0-3 entries; more is over-flagging).
+- **Payoff in** — chapter number.
+- **How to plant** — one-line instruction. Reference `references/seed-craft.md`.
+- **How to pay off** — one-line instruction.
+- **Status:** start as `planned`.
+
+Aim for **8-15 seeds per book minimum** for an epic fantasy. Of those:
+- ~30% small (single sensory details — a smell, a scar, a hand
+  movement)
+- ~50% medium (a recurring character, a misread relationship, a held
+  object)
+- ~20% large (a hidden identity, an inherited debt, a misnamed event)
+
+**Distribute plants across act 1 and early act 2.** Payoffs cluster in
+act 2B and act 3. Echoes scatter in between. A chapter with both a
+plant AND a payoff for *different* seeds is fine; the same seed should
+not plant and pay off in adjacent chapters.
+
+Use `references/seed-craft.md` to coach the user on each seed's
+instructions. If the user offers a seed that telegraphs ("the strange
+old man with the prophecy"), push them toward a craftier version
+("the old man who fixes the well in chapter 2 and never quite leaves
+the village").
+
+#### 2d. Character arcs
+
+Open `plan/arcs.md`. For each principal:
+
+- Wound, Want, Need, Lie — pull from `setup.md` if filled.
+- **Waypoints** — give each arc concrete chapter milestones:
+  - State at start
+  - First crack (which chapter the wound first stings)
+  - Midpoint shift
+  - All-is-lost low
+  - Decision moment (which chapter)
+  - End-state
+- **Transformation type** — positive, negative, or tragic.
+
+The protagonist's decision moment should align with the climax. A
+secondary character's decision moment can sit in act 2B and inform
+the protagonist's climax.
+
+#### 2e. The visible outline
+
+Now fill `plan/outline.md`, **chapter by chapter, in order**. For each
+chapter:
+
+- **Title** — working title; can change.
+- **POV** — which character.
+- **Where / when** — place + time elapsed.
+- **Function in the act** — one sentence: what this chapter does for
+  the larger arc.
+- **Plot beats** — 3-6 short bullets, in order.
+- **Texture beats** — 2-4 dwelling moments (300-500 words each). Be
+  specific: the smell of pitch from the artisans' quarter, the way the
+  midwife rolls a cigarette before she speaks, the bells at sundown.
+  These are how the book breathes. **Without texture beats, chapters
+  come out short.**
+- **Subtext beats** — what the POV feels but doesn't say; what the
+  reader senses without being told; which lie the character is
+  protecting in this scene.
+- **Transition out** — how the chapter ends so the next one feels
+  inevitable.
+
+Pacing rules (`references/fantasy-beats.md`):
+- Never two action chapters back-to-back. Quiet earns loud.
+- Alternate emotional registers.
+- Act 1 should feel **inhabited** — dwell on daily life, magic in
+  mundane use, world texture. The reader is being placed in the world.
+- Sharp midpoint. Something the reader believed gets overturned. Mark
+  this clearly in the chapter's function.
+- Subplots touch the main plot at ≥3 points and resolve before or
+  during the climax.
+
+For each chapter, the agent should also note in subtext beats which
+seed envelope items will be active (this lets the writer-of-record see
+the plan and the seed envelope agree).
+
+#### 2f. Fill canon
+
+Walk through the `canon/*.md` files. Promote facts from `setup.md`
+into stable canon entries:
+
+- `canon/characters.md` — every principal + named secondaries. Tight
+  entries: role, three physical specifics, voice tic, current location,
+  current emotional state, current relationships, magic relationship,
+  secrets (writer-only).
+- `canon/factions.md` — every named faction/caste/order.
+- `canon/magic.md` — promote the full system from setup.md. Lock the
+  in-world vocabulary here.
+- `canon/world.md` — every named place with sensory anchor and
+  political stance.
+- `canon/timeline.md` — historical events (pre-book) + initial
+  book chronology (just ch 1's day for now; the rest grows).
+
+These files will be read in full by the chapter writer. **Keep them
+tight.** If a character has a multi-paragraph description, trim to the
+load-bearing details.
+
+### 3. Validate before finishing
+
+Run a pass over the plan to check:
+
+- [ ] Every chapter in `outline.md` has plot **and** texture **and**
+      subtext beats (no `> TODO:` left in critical fields).
+- [ ] Shadow has overview + per-act + at least midpoint and climax
+      chapter sections filled.
+- [ ] ≥ 8 seeds in `seeds.md`, each with plant/payoff chapters; status
+      is `planned` for all.
+- [ ] Each principal in `arcs.md` has a decision moment chapter.
+- [ ] `canon/magic.md` has source + mechanic + ≥2 costs + ≥3 limits.
+- [ ] No `> TODO:` left in `canon/characters.md` for principals.
+
+If anything is missing, **show the user the list** and ask whether to
+fill it now or defer.
+
+### 4. Wrap up
+
+Print a short summary:
+
+- Title, chapters, principal characters
+- Number of seeds planted across the book
+- Midpoint chapter and what overturns there (one line)
+- Climax chapter and the decision being made (one line)
+
+Tell the user the next step: run `write-chapter --chapter 1` to begin
+writing. Remind them they can edit any plan file at any time — the
+writer reads the current file each chapter.
+
+## What this skill does NOT do
+
+- Does not write any prose.
+- Does not produce summaries (that's `update-canon` after each chapter).
+- Does not modify `setup.md` (use `book-setup` for that).
+
+## Files this skill writes
+
+- `output/<series>/book-NN/plan/outline.md`
+- `output/<series>/book-NN/plan/shadow.md`
+- `output/<series>/book-NN/plan/seeds.md`
+- `output/<series>/book-NN/plan/arcs.md`
+- `output/<series>/book-NN/canon/{characters,factions,magic,world,timeline}.md`
