@@ -99,10 +99,30 @@ Go through these checks in order. For each, write a finding (or
     decorative beautiful lines that carry no plot/character/sense, and
     any rule the book's own `style.md` declares. Quote each. `SHOULD
     fix`; `MUST fix` if it breaks an explicit book-level style rule.
+8c. **Richness & seeding — the add-back check.** This check looks for
+    what is *missing*, not what is excess: a critique that only
+    subtracts can only make prose blander. Two passes:
+    - **Sensory mandate.** Does every scene land at least one concrete
+      sensation the reader *feels* (temperature, sound, weight, taste,
+      smell), not a sensation the narrator merely names? Mark any scene
+      that reads grey/abstract. If the book's premise is sensory
+      (colour, sound, scent — see `style.md`), hold it harder: a scene
+      that does not make that premise felt is a `SHOULD fix` with a
+      concrete suggestion of what to add, not just a note.
+    - **Unseeded payoffs (Chekhov).** List everything that breaks, pays
+      off, or turns out to matter in this chapter, and check each one
+      appeared *earlier* in ordinary use (this chapter or a prior one).
+      An object/danger/skill that arrives only at the moment it matters
+      is a `SHOULD fix`: name where the seed should have been planted.
+      (The seed envelope in check 5 only covers tracked seeds; this
+      catches the untracked setups too — e.g. a structure that
+      collapses must have been shown as fragile beforehand.)
 9. **Anti-patterns.** Search the chapter for every entry in
    `references/prose-antipatterns.md` (banned lexicon, fantasy
    clichés, structural tics). Quote each occurrence. `SHOULD fix`
-   for most; `MUST fix` if there are >5 instances.
+   for most; `MUST fix` if there are >5 instances. Do **not** flag
+   richness, lyricism, or sensory density that is not a named
+   anti-pattern — that is texture, not a defect (see 8c).
 10. **Opening / ending.** Did the chapter start in a non-cliché way
     (not waking up, not battle, not prophecy)? Does it end on the
     transition out specified in the beat sheet?

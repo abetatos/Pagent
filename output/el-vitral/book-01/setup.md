@@ -346,26 +346,43 @@ Ver `canon/characters.md` para fichas y `plan/arcs.md` para arcos.
   con destellos íntimos cuando es Yedra.
 - **Register:** sobrio y directo. Tono litúrgico SOLO en los rituales de
   luz; cotidiano y áspero en las escenas campesinas. "Literario" aquí
-  significa prosa limpia y concreta, **no** prosa amanerada. Sin pulpa.
-- **Narrador (regla dura — el autor lo pidió explícitamente):** contar la
-  historia de forma llana. **Prohibido el narrador aforístico.** Nada de
-  frases-sentencia ni máximas generales ("para hacer X hay que creer Y",
-  "las cosas de los muertos pesan más en…"), nada de cascadas de
-  causa-efecto encadenadas con *y… y… y…* (polisíndeton), nada de
-  epigramas construidos ni de narrador que filosofa. Las frases breves de
-  Bruno son voz seca y concreta, NO interludios sapienciales. Si una
-  frase suena a cita de libro de citas, va fuera. **Un recurso literario
-  puntual y bien medido está permitido** (una imagen, un giro) — lo que
-  se prohíbe es el amaneramiento sostenido: que el narrador se luzca en
-  vez de contar. Por defecto, llano; el adorno, la excepción.
+  significa prosa limpia, concreta y **sensorialmente rica**, no prosa
+  amanerada. Concreto no quiere decir gris.
+- **Mandato sensorial del color (lo primero, por encima de todo lo
+  demás):** este es un libro **sobre** el color. Cada escena debe **hacer
+  sentir** al menos un color por temperatura, sonido, sabor o peso — no
+  nombrarlo, hacerlo experimentar. Acuña nombres de aldea para los colores
+  y deja que vuelvan ("verde de oír crecer", el violeta que tiene su
+  propio frío, las campanas afinadas a la hora-color). La sinestesia
+  color↔sentido **es** el libro, no un adorno; gástala con generosidad.
+  Esta riqueza nunca se autocensura al escribir; si sobra, se poda en el
+  critique. Lo gris es el fallo por defecto, no lo recargado.
+- **La única diana prohibida — el narrador aforístico:** lo que va fuera
+  es la **frase-sentencia universal en presente atemporal** que suena a
+  cita de calendario ("las cosas de los muertos pesan más en…", "para
+  hacer X hay que creer Y") y los **epigramas de cierre** en los que el
+  narrador se sube a filosofar sobre el tema. Eso es lo único. NO está
+  prohibido: la imagen rica, la prosa densa, ni el polisíndeton (*y… y…
+  y…*) cuando es **cadencia de cuento popular** — solo cuando es el
+  vehículo de una máxima encadenada. La voz de Bruno es seca y concreta,
+  pero la *narración* a su alrededor puede tener textura. En la duda,
+  escribe la línea más rica: el corrector quita aforismos concretos
+  (citados), no apaga la riqueza.
+- **Siembra obligatoria (no es pedantería):** todo lo que se rompe, se
+  paga o pesa más tarde debe aparecer **antes** en uso cotidiano (el
+  telar combado y apuntalado antes de caerse; el poste flojo). Una
+  preparación puede parecer "explicar de más" — no la cortes. Un pago sin
+  sembrar es el peor defecto.
+- **Léxico de casta:** la casta es **"marrón"**, nunca "pardo" (eso es
+  solo el topónimo *Vega Parda*).
 - **Desired tics:** sinestesia color↔sonido en los rituales; verbos
   artesanales (clavar, doblar, recoser); descripciones por la mano y el
   oído antes que por la vista. Emoción mostrada por acción y objeto, no
   enunciada por el narrador.
 - **Forbidden tics:** "tapices de", "etéreo", "delvear"; rhetoric de
-  elegido; listas X, Y, Z; monólogos internos sobre el tema al cerrar
-  capítulo; **aforismos del narrador y cascadas *y… y… y…* (ver regla
-  dura arriba)**.
+  elegido; listas X, Y, Z; aforismos del narrador y epigramas de cierre
+  (ver la diana arriba). Esta lista son tics concretos, no un mandato de
+  llaneza.
 
 ## If continuation (book 2+ of a series)
 

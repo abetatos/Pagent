@@ -2,9 +2,18 @@
 
 These are patterns that LLM-generated fantasy prose falls into by
 default. They make the prose sound generic and AI-written. The writer
-should actively avoid them while writing — *not* rely on a post-hoc
-"refiner" to scrub them out, because by then the scene is already
-shaped around them.
+should actively avoid these *specific named tics* while writing —
+avoiding them never costs richness, because none of them is ever
+load-bearing ("delve", weather openers, "a sense of" add nothing).
+
+**Read this as a scalpel, not a chill.** This list names tics to skip;
+it is **not** a mandate for plainness, and its spirit must not be
+extended into self-censoring vivid, specific, lyrical, or sensory-dense
+writing. Richness is not on this list. If a passage is rich but not a
+named anti-pattern, it is allowed — write it. Excess (if any) is the
+critique pass's job to trim afterward; pre-emptively flattening prose to
+feel safe produces bland writing that no critique can restore. See the
+"engine before the brakes" section in `style.md`.
 
 ## Lexical contamination — never use
 
