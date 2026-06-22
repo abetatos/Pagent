@@ -40,6 +40,13 @@ validating. Push back. The plan exists to be stress-tested.
 - **Adversarial bias.** When unsure, escalate the tier. A plan that
   passes critique-plan with zero issues is suspicious; you missed
   something.
+- **No leak from prior reviews — audit FRESH every time.** Do **not**
+  read the previous `notes/critique-plan.md` or any earlier `_audit-plan.md`
+  before forming your own findings. Each pass must be independent: a fix the
+  author applied between runs has to survive a clean re-read, not a memory
+  of "we already decided this is fine". Anchoring on the last verdict is an
+  information leak that hides regressions. The only audit you trust is the
+  one **you** generate this run (step 1). Overwrite, don't merge.
 
 ## Steps
 
