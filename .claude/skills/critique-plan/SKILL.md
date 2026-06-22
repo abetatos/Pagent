@@ -252,28 +252,42 @@ Print:
 - Verdict and counts by tier.
 - The 3-5 most load-bearing findings (one line each).
 - Path to the critique file.
-- Suggested next step:
-  - **REJECT** → discuss the MUST items; user revises plan files;
-    re-run `critique-plan`.
-  - **REVISE** → discuss the SHOULD items; the user picks which to
-    address; updates plan files; re-run.
-  - **PASS** → `write-chapter 1`.
 
-### 6. Interactive iteration
+Then go **straight into step 6** — do not just leave the verdict and wait.
+The contract is: critique-plan ALWAYS ends by offering possible solutions
+as an `AskUserQuestion` menu, not as free prose the author has to parse.
 
-After reporting, the user will likely want to dig into specific
-findings. For each one:
-- Quote your finding.
-- Show the offending plan text.
-- Propose 2-3 concrete revisions.
-- Wait for the user to choose / rewrite.
-- The user edits the plan file directly (or you do, with their
-  consent, via Edit on the specific file).
-- After significant edits, re-run `audit_plan.py` to confirm the
-  mechanical issues cleared.
+### 6. Offer solutions as an AskUserQuestion menu
+
+After reporting, surface the findings the author must act on as **choices
+with concrete solutions** — this is the required closing move of the skill.
+
+- **PASS, zero MUST/SHOULD** → one confirm question: "Plan looks ready —
+  proceed to chapter 1?" with options `write chapter 1 (recommended)` /
+  `keep polishing CONSIDER items` / `re-audit`.
+- **REVISE / REJECT** → take the load-bearing findings (MUST first, then
+  SHOULD) and present them as `AskUserQuestion` questions, **up to 4 per
+  call** (batch the rest into a second call after). For each finding:
+  - `question`: the problem in one line, quoting the offending plan text /
+    chapter / seed id.
+  - `options`: **2-4 concrete solutions to THAT problem**, the one you
+    recommend first and labelled "(recommended)". Each option is an actual
+    fix (e.g. "Move the apex-tier reveal from ch7 to the climax (ch28)",
+    "Add a Trigger to seed S-04: the dam was already cracked in ch9"), not
+    a vague direction. The author can always pick "Other" to dictate their
+    own fix.
+
+After the author chooses:
+- Apply each chosen solution by editing the specific `plan/*.md` /
+  `canon/*.md` / `setup.md` file (you may edit directly once they've
+  picked — the choice IS their consent for that fix).
+- Re-run `audit_plan.py` to confirm the mechanical issues cleared.
+- If MUST items remain, loop: present the next batch as another
+  AskUserQuestion menu. Continue until no MUST items remain.
 
 Do **not** automatically re-run the full qualitative pass after each
-small edit. Re-run only when the user asks "is the plan ready now?"
+small edit. Re-run the full critique only when the author asks "is the
+plan ready now?" or when all MUST items have been addressed.
 
 ## What this skill does NOT do
 
