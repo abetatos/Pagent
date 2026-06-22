@@ -31,6 +31,39 @@ have an accurate picture without re-reading prose.
 
 ## Steps
 
+### 0. Pre-lock consistency check (before any write)
+
+Lock-in is **the moment a chapter becomes load-bearing for everything
+after it.** Once canon is updated and seeds advance, future chapters
+will be written against those facts. So before touching any file,
+do an explicit consistency pass:
+
+- **Chapter vs shadow.** Did the chapter accidentally state something
+  that shadow.md says should stay hidden? If so, **stop and report** —
+  the chapter may need a revision before locking, or shadow.md may
+  need updating to acknowledge the leak.
+- **Chapter vs canon.** Did the chapter contradict a canon entry
+  (name, place, magic rule, relationship)? Quote both. **Stop and ask
+  the author** whether to revise the chapter or update canon.
+- **Chapter vs seeds.** Were the seeds in this chapter's envelope
+  actually planted/echoed/paid in the prose? If a scheduled seed is
+  missing from the prose, **stop and report** — locking in would
+  break the seed's status chain.
+- **Chapter vs bible.** Does the chapter assume something the bible
+  declares fixed differently? Bible takes precedence over chapter
+  prose. **Stop and ask.**
+- **Chapter vs arc waypoints.** Is the POV's state at chapter end
+  compatible with their next waypoint? If the chapter took the
+  character somewhere the arc didn't plan for, the arc may need
+  updating — or the chapter rewrites.
+
+If anything surfaces, do not proceed with the rest of update-canon
+until the author decides how to resolve. The cost of locking in a
+contradiction is paid in every future chapter.
+
+If everything checks out, say so ("pre-lock consistency check clean
+— proceeding to summary and canon promotion") and continue.
+
 ### 1. Prepare the skeletons and read what's due
 
 ```bash
@@ -143,14 +176,58 @@ This file is what previous-book context becomes for the next book in
 a trilogy. Keep it ruthless. If it grows past ~2500 words, trim the
 oldest threads.
 
+### 5b. Mandatory checkpoint (conversation → disk)
+
+This is **not optional**. Once chapter N is locked into canon, the
+conversation that wrote it becomes safe to discard — but only if
+everything ephemeral has been persisted first. So you run a checkpoint
+right here, as part of lock-in.
+
+Follow the `checkpoint` skill's protocol:
+
+```bash
+python3 .claude/skills/checkpoint/scripts/checkpoint.py \
+    --series-slug <slug> --book-number <N> --report
+```
+
+Then look back over the conversation for chapter N (and only this
+chapter — earlier chapters are already checkpointed) and add to:
+
+- **`notes/voice.md`** — any new POV / voice observation that came up
+  while writing or critiquing this chapter. Date-stamp.
+- **`notes/style-rules.md`** — any rule the **author** stated in chat
+  during this chapter (not your inferences). Date-stamp.
+- **`notes/open-questions.md`** — any thread that was discussed but
+  not resolved during this chapter.
+
+If nothing new accumulated, write nothing. Idempotent.
+
+This step transforms the locked chapter into something the conversation
+no longer needs to remember.
+
 ### 6. Report
 
-Print to the user:
-- Chapter N summary written (word count of the summary).
-- Seed statuses advanced (one line per seed).
-- Canon files modified (one line per file with the kind of update).
+Print to the user, in this exact order:
+
+```
+✓ Chapter N locked in.
+
+- Summary: notes/summaries/ch-NN.md (X words)
+- Seed statuses advanced: seed-id-1 → planted, seed-id-2 → echoed-1, ...
+- Canon updated: characters.md, world.md, timeline.md
 - Book summary refreshed.
-- Suggested next step: `write-chapter <N+1>`.
+- Checkpoint: M new entries (or "no new state to persist").
+
+Safe to /clear before chapter N+1.
+```
+
+The **last line is the explicit signal**. It tells the author that
+this is a natural pause point and the conversation can be discarded
+without losing anything.
+
+If chapter N closes an act (i.e., N is divisible by 7 by default —
+`DEFAULT_CHAPTERS_PER_ACT` in `lib/summaries.py`), the suggestion
+changes to: **"Strongly recommended: run `close-act` then /clear."**
 
 ### 7. Optional: act compression check
 

@@ -19,14 +19,26 @@ user decides whether to apply revisions.
 - **Quote the offending line.** Always.
 - **Prioritize ruthlessly.** Group findings into:
   - **MUST fix** — breaks canon, breaks seed envelope, breaks shadow,
-    contradicts the beat sheet, falls below 80% word target.
+    contradicts the beat sheet, falls below 80% word target. Also:
+    plot beats that don't follow causally from prior chapter,
+    character actions inconsistent with the arc waypoint at this
+    chapter, motivations that require off-stage information.
   - **SHOULD fix** — anti-pattern phrases, missed dwelling
-    opportunities, weak subtext, telegraphed seeds.
+    opportunities, weak subtext, telegraphed seeds, tonal drift, a
+    chapter ending that doesn't earn the transition the beat sheet
+    promised.
   - **CONSIDER** — taste-level suggestions. The user can ignore.
 - **Do not rewrite the chapter.** Quote, name, point. Concrete
   *direction* yes; substitute prose no.
 - **Do not invent reasons.** Every "MUST fix" must cite a specific
   source: canon line, beat sheet bullet, seed id, anti-pattern name.
+- **Look for story flaws, not just craft flaws.** A chapter can be
+  technically clean (all beats hit, all seeds present, prose tidy)
+  and still **wrong**: the protagonist's motivation in scene 3 doesn't
+  match what they know; the chapter doesn't change the world state;
+  the dramatic energy descends when it should ascend. These get the
+  same MUST/SHOULD treatment as anti-patterns. If a chapter passes
+  cleanly with zero findings, you are missing something — re-read.
 
 ## Steps
 
@@ -47,6 +59,8 @@ Read `notes/_context-chMM.md`. The relevant sections for critique are:
 - **Shadow timeline** — the writer's truths; check what should be
   *implied* but not stated.
 - **Seed envelope** — must be honored exactly.
+- **Style guide** — this book's own `style.md` (self-contained voice
+  guide). Includes the anti-cursi calibration.
 - **References** — anti-patterns checklist, dwelling techniques.
 
 Then read the chapter: `chapters/MM.md`.
@@ -78,6 +92,13 @@ Go through these checks in order. For each, write a finding (or
    relationships against `canon/`. Quote any contradiction.
    `MUST fix`.
 8. **POV / voice / tense.** Match `setup.md`. Any drift is `SHOULD fix`.
+8b. **Style guide.** Hold the prose against the Style guide section
+    (this book's `style.md`). Flag violations of the anti-cursi
+    calibration especially: emotional thesis statements, overspent
+    physical emotion (tears/trembling more than once or twice),
+    decorative beautiful lines that carry no plot/character/sense, and
+    any rule the book's own `style.md` declares. Quote each. `SHOULD
+    fix`; `MUST fix` if it breaks an explicit book-level style rule.
 9. **Anti-patterns.** Search the chapter for every entry in
    `references/prose-antipatterns.md` (banned lexicon, fantasy
    clichés, structural tics). Quote each occurrence. `SHOULD fix`

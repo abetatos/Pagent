@@ -205,6 +205,33 @@ SETUP_TEMPLATE = """# Book setup — {title}
 """
 
 
+STYLE_MASTER = REPO_ROOT / "references" / "style.md"
+
+STYLE_HEADER = """# Style — {title}
+
+> This book's style guide — the single source of truth for how this book
+> reads. It was copied from the house template (`references/style.md`) when
+> the book was created; edit it freely. Changes here affect only this book.
+
+"""
+
+
+def _book_style_from_master(title: str) -> str:
+    """Build a book's style.md as a full copy of the master template.
+
+    Everything from the master's first `##` heading onward is duplicated, so
+    each book owns a complete, self-contained style file (no global/override
+    layering that could contradict itself).
+    """
+    header = STYLE_HEADER.format(title=title)
+    if not STYLE_MASTER.exists():
+        return header
+    master = STYLE_MASTER.read_text(encoding="utf-8")
+    idx = master.find("\n## ")
+    body = master[idx + 1:] if idx != -1 else master
+    return header + body.strip() + "\n"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--series-slug", required=False, help="Series slug (folder name). If omitted, computed from title.")
@@ -223,6 +250,10 @@ def main() -> int:
 
     content = SETUP_TEMPLATE.format(title=args.title, book_number=args.book_number)
     paths.setup_md.write_text(content, encoding="utf-8")
+
+    # Per-book style: a full copy of the master template (self-contained)
+    if not paths.style_md.exists():
+        paths.style_md.write_text(_book_style_from_master(args.title), encoding="utf-8")
 
     # Touch empty files we'll need later
     if not paths.series_md.exists():
@@ -243,6 +274,7 @@ def main() -> int:
 
     print(f"Initialized at {paths.book_root}")
     print(f"setup.md created — edit it: {paths.setup_md}")
+    print(f"style.md created (optional override; inherits global until filled): {paths.style_md}")
     print(f"Series slug: {series_slug}")
     return 0
 

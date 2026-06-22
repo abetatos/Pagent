@@ -29,22 +29,43 @@ from lib import setup_doc
 
 # --- header parsing for setup.md sub-sections -----------------------------
 
-PRINCIPAL_HEADER_RE = re.compile(r"^###\s+(?:Character|Personaje)\s*\d+\s*—\s*(.+?)\s*$", re.MULTILINE)
+PRINCIPAL_HEADER_LONG_RE = re.compile(r"^###\s+(?:Character|Personaje)\s*\d+\s*—\s*(.+?)\s*$", re.MULTILINE)
+# Accept the short form too: bare "### Name" inside the principals section.
+PRINCIPAL_HEADER_SHORT_RE = re.compile(r"^###\s+(.+?)\s*$", re.MULTILINE)
 FACTION_HEADER_RE = re.compile(r"^###\s+(?:Faction|Facción)\s*\d+\s*(?:—\s*(.+?))?\s*$", re.MULTILINE)
 
 
 def parse_principals(setup_text: str) -> list[str]:
-    """Return a list of principal character names from setup.md."""
+    """Return a list of principal character names from setup.md.
+
+    Accepts both the long-form template header ("### Character 1 — Bruno")
+    and the short form ("### Bruno"). Skips placeholder names like
+    "(name)" / "(nombre)".
+    """
     chars_section = setup_doc.get_section(setup_text, "characters — principals") or \
         setup_doc.get_section(setup_text, "personajes — principales") or \
         setup_doc.get_section(setup_text, "characters")
     names: list[str] = []
-    for m in PRINCIPAL_HEADER_RE.finditer(chars_section):
+    seen: set[str] = set()
+
+    def add(name: str) -> None:
+        raw = re.sub(r"\s*\([^)]*\)\s*$", "", name).strip()
+        if raw.lower() in ("name", "nombre", "(name)", "(nombre)", ""):
+            return
+        if raw not in seen:
+            names.append(raw)
+            seen.add(raw)
+
+    # Long form wins where present
+    for m in PRINCIPAL_HEADER_LONG_RE.finditer(chars_section):
+        add(m.group(1).strip())
+    # Then short form catches "### Bruno"
+    for m in PRINCIPAL_HEADER_SHORT_RE.finditer(chars_section):
         raw = m.group(1).strip()
-        # Skip placeholder "name" / "nombre"
-        if raw.lower() in ("name", "nombre", "(name)", "(nombre)"):
+        # Skip ones that already matched the long form pattern
+        if re.match(r"^(?:Character|Personaje)\s*\d+", raw, re.IGNORECASE):
             continue
-        names.append(raw)
+        add(raw)
     return names
 
 

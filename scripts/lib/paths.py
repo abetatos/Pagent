@@ -10,6 +10,7 @@ Layout:
                 magic.md
             book-NN/
                 setup.md
+                style.md               # per-book style guide (copied from references/style.md)
                 assets/                # static assets for export
                     cover.jpg          # book cover (jpg/jpeg/png) — fixed location
                 canon/                 # book-specific canon
@@ -66,6 +67,12 @@ class BookPaths:
     @property
     def setup_md(self) -> Path:
         return self.book_root / "setup.md"
+
+    @property
+    def style_md(self) -> Path:
+        """This book's self-contained style guide (copied from the master
+        template references/style.md at book creation)."""
+        return self.book_root / "style.md"
 
     @property
     def assets_dir(self) -> Path:
@@ -145,6 +152,28 @@ class BookPaths:
     @property
     def drops_md(self) -> Path:
         return self.notes_dir / "drops.md"
+
+    # --- conversation-memory files (checkpoint / handoff) ---------------
+
+    @property
+    def voice_md(self) -> Path:
+        """Rolling voice / POV observations. Updated each update-canon."""
+        return self.notes_dir / "voice.md"
+
+    @property
+    def style_rules_md(self) -> Path:
+        """Style rules the author has expressed explicitly in chat."""
+        return self.notes_dir / "style-rules.md"
+
+    @property
+    def open_questions_md(self) -> Path:
+        """Threads discussed but not resolved — surfaced on next session."""
+        return self.notes_dir / "open-questions.md"
+
+    @property
+    def session_handoff_md(self) -> Path:
+        """Overwritten at each close-act. Read first thing by resume-act."""
+        return self.notes_dir / "session-handoff.md"
 
     def ensure_dirs(self) -> None:
         """Create all directories needed for a book."""

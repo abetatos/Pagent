@@ -72,16 +72,19 @@ Invoke a skill by name or just by describing the intent.
 |-------|--------------|
 | `book-setup` | Interactive intake → writes `setup.md`, the single source of truth. |
 | `plan-book` | Turns `setup.md` into `plan/*` (outline, shadow, seeds, arcs) + initial `canon/*`. |
-| `critique-plan` | Hard audit of the finished plan before chapter 1. |
+| `critique-bible` | Adversarial audit of the **series bible** before any per-book work starts. |
+| `critique-plan` | Hard audit of the finished per-book plan before chapter 1. |
+| `resume-act` | **First step of every new session.** Reads handoff, voice rules, pendientes — reports state. |
 | `write-chapter` | Writes one chapter to target length from the assembled context. |
 | `critique-chapter` | Structured critique against beats, canon, seeds, and prose anti-patterns. |
 | `expand-chapter` | Grows an under-length chapter with depth — no new plot. |
 | `revise-chapter` | Surgical fixes for flagged issues (`polish` / `trim` / `tighten-seeds`). |
-| `update-canon` | Locks a chapter in: summary, seed statuses, new facts → canon. |
-| `compress-act` | Folds a finished act's summaries into one — seeds/shadow stay explicit. |
+| `update-canon` | Locks a chapter in: summary, seed statuses, new facts → canon. Includes mandatory checkpoint sync. |
+| `checkpoint` | Fast manual sync of ephemeral chat state to disk. Run before `/compact`. |
+| `close-act` | End-of-act: compresses summaries, stabilises voice rules, writes session handoff. |
 | `search-corpus` | Targeted grep across canon → plan → summary → chapter. |
 | `compile-book` | Compiles the finished chapters into a Kindle-ready EPUB (and can email it to your Kindle). |
-| `write-novel` | Orchestrator: chains the per-chapter loop until the book is done. |
+| `write-novel` | Orchestrator: chains the per-chapter loop, halts at act boundaries for /clear. |
 
 ## Quickstart
 
@@ -109,6 +112,41 @@ Drive it end to end:
 write-novel --from-chapter 1 --through-chapter 25
 write-novel --autopilot     # don't pause between chapters
 ```
+
+## Session hygiene (one act per session)
+
+Long Claude Code conversations degrade model quality. The pipeline is
+designed so each writing session covers **one act (~7 chapters)** and
+ends with a `/clear`. Everything you'd want to remember across sessions
+is persisted to disk by `update-canon` (per chapter) and `close-act`
+(per act), so the next session can rebuild state in seconds via
+`resume-act`.
+
+```text
+Session 1 (Act 1)
+  resume-act               ← always first; reports state
+  write-chapter 1
+  update-canon 1           ← includes mandatory checkpoint;
+                             signs "Safe to /clear before chapter 2"
+  ...
+  write-chapter 7
+  update-canon 7
+  close-act 1              ← signs "STRONGLY recommended: /clear"
+  /clear                   ← you trigger
+
+Session 2 (Act 2)
+  resume-act
+  write-chapter 8
+  ...
+```
+
+If you need to `/compact` mid-session, run `checkpoint` first — it
+syncs ephemeral chat state to disk so nothing important is lost.
+
+Skills cannot trigger `/clear` or `/compact` themselves (those are
+user commands). What they do instead: end each canonical step with an
+explicit `Safe to /clear` or `STRONGLY recommended: /clear` signal,
+so you know exactly when to act.
 
 ## Repository layout
 

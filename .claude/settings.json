@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Edit(/.claude/skills/critique-plan/**)",
+      "Edit(/.claude/skills/plan-book/**)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Edit(/.claude/skills/write-chapter/**)",
+      "Edit(/.claude/skills/write-novel/**)",
+      "Edit(/.claude/skills/update-canon/**)",
+      "Edit(/.claude/skills/critique-chapter/**)",
+      "Bash(mkdir -p /home/betato/Projects/book-writer/.claude/skills/critique-bible/scripts)",
+      "Edit(/.claude/skills/critique-bible/**)",
+      "Bash(mkdir -p /home/betato/Projects/book-writer/.claude/skills/checkpoint/scripts /home/betato/Projects/book-writer/.claude/skills/close-act/scripts /home/betato/Projects/book-writer/.claude/skills/resume-act/scripts)",
+      "Edit(/.claude/skills/checkpoint/**)",
+      "Edit(/.claude/skills/close-act/**)",
+      "Edit(/.claude/skills/resume-act/**)",
+      "Bash(git checkout *)",
+      "Bash(git tag *)"
+    ],
+    "additionalDirectories": [
+      "/home/betato/Projects/book-writer/.claude/skills/critique-bible",
+      "/home/betato/Projects/book-writer/.claude/skills/checkpoint"
+    ]
+  }
+}

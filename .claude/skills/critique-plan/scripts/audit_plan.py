@@ -159,10 +159,11 @@ def shadow_findings(shadow_text: str, declared_chapters: int) -> dict:
 
 # ----- seeds -------------------------------------------------------------
 
-def seeds_findings(seed_list, declared_chapters: int, chapters_per_act: int = 7) -> dict:
+def seeds_findings(seed_list, declared_chapters: int, chapters_per_act: int = 7, max_payoffs_per_chapter: int = 4) -> dict:
     invalid: list[str] = []
     plants_per_act: Counter = Counter()
     payoffs_per_act: Counter = Counter()
+    payoffs_per_chapter: Counter = Counter()
     plant_chapters: set[int] = set()
     echo_chapters: set[int] = set()
     payoff_chapters: set[int] = set()
@@ -191,8 +192,14 @@ def seeds_findings(seed_list, declared_chapters: int, chapters_per_act: int = 7)
         if s.payoff_in is not None:
             payoff_chapters.add(s.payoff_in)
             payoffs_per_act[((s.payoff_in - 1) // chapters_per_act) + 1] += 1
+            payoffs_per_chapter[s.payoff_in] += 1
         for e in s.echo_in:
             echo_chapters.add(e)
+
+    overloaded = sorted(
+        [(ch, count) for ch, count in payoffs_per_chapter.items() if count > max_payoffs_per_chapter],
+        key=lambda x: -x[1],
+    )
 
     return {
         "total": len(seed_list),
@@ -202,6 +209,9 @@ def seeds_findings(seed_list, declared_chapters: int, chapters_per_act: int = 7)
         "payoff_chapters": sorted(payoff_chapters),
         "plants_per_act": dict(plants_per_act),
         "payoffs_per_act": dict(payoffs_per_act),
+        "payoffs_per_chapter": dict(payoffs_per_chapter),
+        "overloaded_payoff_chapters": overloaded,
+        "max_payoffs_per_chapter_threshold": max_payoffs_per_chapter,
         "chapters_without_any_seed_activity": [
             n for n in range(1, declared_chapters + 1)
             if n not in plant_chapters and n not in echo_chapters and n not in payoff_chapters
@@ -233,22 +243,25 @@ def arc_findings(arcs_text: str) -> dict:
             continue
         if PLACEHOLDER_NAME_RE.match(name):
             continue
-        principals.append(name)
-        # Each field
+        # Strip trailing annotation like "Portaluz (secundario, sin arc completo)"
+        clean_name = re.sub(r"\s*\([^)]*\)\s*$", "", name).strip()
+        principals.append(clean_name)
+        # The colon may sit inside the bold close ("**Decision point (which chapter):**")
+        # OR after the bold close ("**Decision point** — ch 25"). Accept both.
         def field_filled(key: str) -> bool:
-            m = re.search(rf"\*\*{re.escape(key)}[^*]*\*\*\s*[:\-]\s*(.+)", body, re.IGNORECASE)
+            m = re.search(rf"\*\*{re.escape(key)}[^*]*\*\*\s*[:\-]?\s*(.+)", body, re.IGNORECASE)
             if not m:
                 return False
             val = m.group(1).strip()
             return bool(val) and not val.startswith("> TODO") and "TODO" not in val
         if not field_filled("Decision point"):
-            missing_decision.append(name)
+            missing_decision.append(clean_name)
         if not field_filled("Transformation type"):
-            missing_transformation.append(name)
+            missing_transformation.append(clean_name)
         if not field_filled("Lie they believe"):
-            missing_lie.append(name)
+            missing_lie.append(clean_name)
         if not field_filled("Need"):
-            missing_need.append(name)
+            missing_need.append(clean_name)
 
     return {
         "principals": principals,
@@ -275,14 +288,20 @@ def canon_names(text: str, header_level: int = 2) -> list[str]:
     return names
 
 
-def canon_findings(paths: BookPaths, outline_text: str) -> dict:
+def canon_findings(paths: BookPaths, outline_text: str, plan_haystack: str) -> dict:
     chars_text = paths.canon_file("characters").read_text(encoding="utf-8") if paths.canon_file("characters").exists() else ""
     facs_text = paths.canon_file("factions").read_text(encoding="utf-8") if paths.canon_file("factions").exists() else ""
     world_text = paths.canon_file("world").read_text(encoding="utf-8") if paths.canon_file("world").exists() else ""
     magic_text = paths.canon_file("magic").read_text(encoding="utf-8") if paths.canon_file("magic").exists() else ""
 
     character_names = canon_names(chars_text, header_level=2)
+    # Strip "(...)" annotations from character names (e.g. "Vela (lectora)")
+    character_names = [re.sub(r"\s*\([^)]*\)\s*$", "", n).strip() for n in character_names]
     faction_names = canon_names(facs_text, header_level=2)
+    # Strip the parenthetical color/caste suffix from faction names too
+    # ("Iglesia (Blanco)" → "Iglesia") so the plan-coverage check finds
+    # them by their bare name in shadow/seeds/arcs.
+    faction_names = [re.sub(r"\s*\([^)]*\)\s*$", "", n).strip() for n in faction_names]
     # Places are H3 under the Places section in world.md
     place_names: list[str] = []
     places_match = re.search(r"##\s+Places\s*$", world_text, re.IGNORECASE | re.MULTILINE)
@@ -293,12 +312,15 @@ def canon_findings(paths: BookPaths, outline_text: str) -> dict:
             if n.lower().startswith("place name"):
                 continue
             place_names.append(n)
+    # Strip parenthetical TODO suffixes ("(TODO: nombrar)")
+    place_names = [re.sub(r"\s*\([^)]*\)\s*$", "", n).strip() for n in place_names]
 
-    def absent_from_outline(names: list[str]) -> list[str]:
+    def absent_from_plan(names: list[str]) -> list[str]:
         out: list[str] = []
         for n in names:
-            # Word-boundary case-insensitive search
-            if not re.search(rf"\b{re.escape(n)}\b", outline_text, re.IGNORECASE):
+            if not n:
+                continue
+            if not re.search(rf"\b{re.escape(n)}\b", plan_haystack, re.IGNORECASE):
                 out.append(n)
         return out
 
@@ -329,11 +351,11 @@ def canon_findings(paths: BookPaths, outline_text: str) -> dict:
 
     return {
         "characters_named": character_names,
-        "characters_absent_from_outline": absent_from_outline(character_names),
+        "characters_absent_from_plan": absent_from_plan(character_names),
         "factions_named": faction_names,
-        "factions_absent_from_outline": absent_from_outline(faction_names),
+        "factions_absent_from_plan": absent_from_plan(faction_names),
         "places_named": place_names,
-        "places_absent_from_outline": absent_from_outline(place_names),
+        "places_absent_from_plan": absent_from_plan(place_names),
         "magic_completeness": magic,
     }
 
@@ -347,28 +369,55 @@ def setup_findings(setup_text: str) -> dict:
     lo, hi = setup_doc.words_per_chapter_range(setup_text)
 
     gating = []
-    # World premise must be ≥3 non-empty content lines
+    # World premise must be ≥3 sentences. Templates wrap the premise in a
+    # `>` blockquote for visual emphasis; we strip the `> ` prefix and any
+    # `> TODO ...` lines, then count sentences in what remains.
     world = setup_doc.get_section(setup_text, "premise of world") or setup_doc.get_section(setup_text, "premisa")
     if world:
-        content_lines = [
-            ln for ln in world.splitlines()
-            if ln.strip() and not ln.strip().startswith(">") and not ln.strip().startswith("-")
-        ]
-        if len(content_lines) < 3:
-            gating.append("world premise has < 3 sentences")
+        clean = re.sub(r"^\s*>\s*TODO.*$", "", world, flags=re.MULTILINE)
+        clean = re.sub(r"^\s*>\s?", "", clean, flags=re.MULTILINE)  # strip > prefix
+        # Strip bullet markers (they may be metadata like "- Era:" which is
+        # not part of the premise itself).
+        clean = re.sub(r"^\s*[-*]\s.*$", "", clean, flags=re.MULTILINE)
+        sentences = [s.strip() for s in re.split(r"[.!?]+", clean) if s.strip() and len(s.strip()) > 10]
+        if len(sentences) < 3:
+            gating.append(f"world premise has < 3 sentences (found {len(sentences)})")
     else:
         gating.append("world premise missing")
 
-    # Magic: source + mechanic + ≥2 costs + ≥3 limits
+    # Magic: source + mechanic must be present and non-placeholder. We treat
+    # a value as a placeholder only when it is *entirely* parenthesized
+    # (e.g. "(where the magic comes from — substance, …)") or empty.
+    def _is_placeholder(val: str) -> bool:
+        v = val.strip()
+        if not v:
+            return True
+        return v.startswith("(") and v.endswith(")")
+
     magic_sec = setup_doc.get_section(setup_text, "magic system") or setup_doc.get_section(setup_text, "sistema de magia") or setup_doc.get_section(setup_text, "magia")
     if magic_sec:
         flds = setup_doc.fields(magic_sec)
-        if not flds.get("source", "").strip() or "(" in flds.get("source", ""):
+        if _is_placeholder(flds.get("source", "")):
             gating.append("magic source missing")
-        if not flds.get("mechanic", "").strip() or "(" in flds.get("mechanic", ""):
+        if _is_placeholder(flds.get("mechanic", "")):
             gating.append("magic mechanic missing")
     else:
         gating.append("magic system section missing")
+
+    # Open decisions: parse ## Open decisions and flag any item marked
+    # gating that does not show RESUELTO: / DECIDIDO: in its body.
+    gating_unresolved: list[str] = []
+    decisions_section = setup_doc.get_section(setup_text, "open decisions") or setup_doc.get_section(setup_text, "decisiones abiertas") or setup_doc.get_section(setup_text, "decisiones aún abiertas")
+    if decisions_section:
+        items = re.split(r"\n\s*\d+\.\s+", "\n" + decisions_section)
+        for item in items[1:]:
+            is_gating = bool(re.search(r"gating:\s*(s[iíy]|yes|true)", item, re.IGNORECASE))
+            is_resolved = bool(re.search(r"resuelto|decidido|resolved|decided|\bdecisión:", item, re.IGNORECASE))
+            if is_gating and not is_resolved:
+                first_line = item.split("\n", 1)[0].strip()
+                # Trim trailing bold/punctuation
+                first_line = re.sub(r"\*+\s*$", "", first_line).rstrip(".:").strip()
+                gating_unresolved.append(first_line[:120])
 
     return {
         "title": title,
@@ -376,6 +425,7 @@ def setup_findings(setup_text: str) -> dict:
         "language": lang,
         "words_per_chapter": (lo, hi),
         "gating_issues": gating,
+        "gating_decisions_unresolved": gating_unresolved,
     }
 
 
@@ -395,6 +445,12 @@ def render_report(s: dict, o: dict, sh: dict, sd: dict, ar: dict, c: dict) -> st
             lines.append(f"  - {issue}")
     else:
         lines.append("- Gating issues: none")
+    if s.get("gating_decisions_unresolved"):
+        lines.append("- **Open decisions still gating (must resolve before ch 1):**")
+        for d in s["gating_decisions_unresolved"]:
+            lines.append(f"  - {d}")
+    else:
+        lines.append("- Open decisions: no unresolved gating")
     lines.append("")
 
     lines.append("## Outline\n")
@@ -432,6 +488,13 @@ def render_report(s: dict, o: dict, sh: dict, sd: dict, ar: dict, c: dict) -> st
             lines.append(f"  - {v}")
     lines.append(f"- Plants per act: {sd['plants_per_act']}")
     lines.append(f"- Payoffs per act: {sd['payoffs_per_act']}")
+    if sd.get("overloaded_payoff_chapters"):
+        threshold = sd["max_payoffs_per_chapter_threshold"]
+        lines.append(
+            f"- **Overloaded payoff chapters (> {threshold} per chapter):**"
+        )
+        for ch, count in sd["overloaded_payoff_chapters"]:
+            lines.append(f"  - ch {ch}: {count} payoffs")
     if sd["chapters_without_any_seed_activity"]:
         lines.append(f"- Chapters with no plant/echo/payoff: {sd['chapters_without_any_seed_activity']}")
     lines.append("")
@@ -453,14 +516,14 @@ def render_report(s: dict, o: dict, sh: dict, sd: dict, ar: dict, c: dict) -> st
 
     lines.append("## Canon\n")
     lines.append(f"- Characters in canon: {c['characters_named']}")
-    if c["characters_absent_from_outline"]:
-        lines.append(f"- **Characters never mentioned in outline:** {c['characters_absent_from_outline']}")
+    if c["characters_absent_from_plan"]:
+        lines.append(f"- **Characters never mentioned in plan (outline+shadow+arcs+seeds):** {c['characters_absent_from_plan']}")
     lines.append(f"- Factions in canon: {c['factions_named']}")
-    if c["factions_absent_from_outline"]:
-        lines.append(f"- **Factions never mentioned in outline:** {c['factions_absent_from_outline']}")
+    if c["factions_absent_from_plan"]:
+        lines.append(f"- **Factions never mentioned in plan:** {c['factions_absent_from_plan']}")
     lines.append(f"- Places in canon: {c['places_named']}")
-    if c["places_absent_from_outline"]:
-        lines.append(f"- **Places never mentioned in outline:** {c['places_absent_from_outline']}")
+    if c["places_absent_from_plan"]:
+        lines.append(f"- **Places never mentioned in plan:** {c['places_absent_from_plan']}")
     m = c["magic_completeness"]
     missing_magic = [k for k, v in m.items() if not v]
     if missing_magic:
@@ -501,7 +564,12 @@ def main() -> int:
     sh = shadow_findings(shadow_text, declared)
     sd = seeds_findings(seed_list, declared)
     ar = arc_findings(arcs_text)
-    c = canon_findings(paths, outline_text)
+    # Combined plan haystack — outline + shadow + arcs + seeds — so the
+    # "absent from plan" check doesn't false-positive when the outline is
+    # still TODO but the character lives in shadow/seeds/arcs.
+    seeds_raw = paths.seeds_md.read_text(encoding="utf-8") if paths.seeds_md.exists() else ""
+    plan_haystack = "\n".join([outline_text, shadow_text, arcs_text, seeds_raw])
+    c = canon_findings(paths, outline_text, plan_haystack)
 
     report = render_report(s, o, sh, sd, ar, c)
 

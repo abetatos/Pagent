@@ -62,10 +62,10 @@ allá, el lugar prohibido: **la cicatriz**.
 - **Who lives there:** nada.
 - **Political stance:** prohibida por Iglesia y Corona.
 
-### Aldea natal de Bruno (TODO: nombrar)
+### Vega Parda (aldea natal de Bruno)
 - **Type:** aldea campesina en provincia apagada.
-- **Sensory anchor:** TODO — propuesto: un telar comunitario que se ve
-  desde casi todas las casas; un pozo de agua siempre fría.
+- **Sensory anchor:** un telar comunitario que se ve desde casi todas las
+  casas; un pozo de agua siempre fría.
 - **Function in plot:** apertura del Libro I; lugar del destello imposible
   que mete a Bruno en la Academia.
 - **Who lives there:** Bruno y su progenitor (vivo o muerto); vecinos.

@@ -60,20 +60,24 @@ lo que la Orden teme y lo que Vela está a punto de comprender.
 ## Act 1 (chapters 1-7)
 
 > Lo que está REALMENTE pasando: las primeras señales de la Aceleración
-> son visibles para quien sabe mirar. El progenitor Negro de Bruno
-> (vivo o muerto — §13.3) ya se está alarmando: ve que la herida se
-> ensancha y sospecha lo que su hijo es. Vela está terminando una
-> auditoría que le revuelve los expedientes; aún no sabe que busca a
-> Bruno, pero sabe que busca a alguien.
+> son visibles para quien sabe mirar — pero el único que en esta
+> provincia habría sabido leerlas, el progenitor Negro de Bruno, ya
+> está muerto (§13.3): su saber se fue con él. Bruno carga lo que es
+> sin nadie vivo que se lo nombre, completamente solo desde el ch 1.
+> Vela está terminando una auditoría que le revuelve los expedientes;
+> aún no sabe que busca a Bruno, pero sabe que busca a alguien.
 >
 > Seeds en este acto: **lectura-en-escena** (siembra), **marrones-nadie-mira**
 > (siembra), **negro-progenitor-trace** (siembra obligua), **aceleracion-reloj** (siembra como ambiente).
 
 ### Chapter 1
-Verdad oculta: el destello imposible que Bruno hace no es un accidente.
-Es el primer síntoma de que su contención ya no aguanta. El mentor
-reformista no lo entiende; el progenitor Negro sí. Es lo que abre toda
-la cadena.
+Verdad oculta: el destello imposible que Bruno hace no es un capricho
+ni una casualidad: es el primer síntoma de que su contención ya no
+aguanta — la misma Aceleración que apaga la provincia es la que afloja
+lo que lo mantenía contenido. El destello es involuntario, no elegido.
+El mentor reformista lo presencia y no entiende lo que ve; nadie vivo
+lo entiende (el progenitor, que sí habría sabido, está muerto). Es lo
+que abre toda la cadena.
 
 ### Chapter 2
 Verdad oculta: Vela está en la región — no por Bruno (todavía), sino

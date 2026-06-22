@@ -70,7 +70,8 @@ order:
 7. Story so far (hierarchical summaries)
 8. Recent chapters in full (last 2)
 9. **Chapter beat sheet — your specific instruction**
-10. Craft references (anti-patterns, dwelling, seed-craft)
+10. Style guide (this book's own `style.md`)
+11. Craft references (anti-patterns, dwelling, seed-craft)
 
 Read this file in full. Do not skim. The beat sheet at section 9 is
 the contract for this chapter.
@@ -80,6 +81,63 @@ the contract for this chapter.
 If the chapter's section 9 contains only `> TODO:` lines, **stop**.
 Tell the user the chapter has no plan and ask them to run `plan-book`
 or fill in the beats by hand. Do not write a chapter from imagination.
+
+### 2b. Pre-write consistency check (always — adversarial bias)
+
+The bar for stopping is **not** "contract violation". It is "would the
+author want to know about this BEFORE 10 000 words of prose land on
+top of it?" Catching a story/logic problem now costs five minutes of
+conversation. Catching it after writing costs the rewrite.
+
+Scan for, in order:
+
+- **Shadow vs outline contradiction.** Does this chapter's beat sheet
+  require something incompatible with the shadow truth for this
+  chapter? (E.g., the POV is supposed to *not know* X, but the beats
+  have them act as if they do.)
+- **Seed envelope feasibility.** Can each seed in the envelope actually
+  be planted / echoed / paid given the POV, location, and events?
+  (E.g., a plant requires the POV to witness an object, but the beat
+  sheet never puts them in the room.)
+- **Arc waypoint alignment.** Is the character's arc state at this
+  chapter compatible with the plot beats? (E.g., the chapter demands
+  decisive action but `arcs.md` puts them in all-is-lost retreat.)
+- **Canon continuity.** Cross-check every named character, place,
+  faction, and magic detail used in the beat sheet against `canon/*`.
+  Flag any contradiction.
+- **Motivation plausibility.** At every plot beat, can the POV
+  character *want* this with only what they know at this point in the
+  book? Flag any decision that requires off-stage information.
+- **Tonal drift.** Do the proposed beats match the declared register
+  in `setup.md §Prose constraints`? (Comic moments in a "belleza
+  fúnebre" book are SHOULD-flag.)
+- **Pacing rhythm.** Was the previous chapter (in the recent-chapters
+  bundle) the same emotional register? Two action chapters back to
+  back violates the pacing rule in `references/fantasy-beats.md`.
+- **Bible alignment.** Does the chapter assume something the bible
+  (`output/<series>/bible.md`) declares fixed differently?
+
+If anything surfaces, **STOP. Do not start drafting.**
+
+Report to the author:
+1. **What you noticed**, with the exact lines from each source quoted.
+2. **Why it matters dramatically** — not just mechanically. (E.g.,
+   "the seed `vela-prisma-anillo` schedules a plant in ch 8, but the
+   beat sheet for ch 8 has Bruno as POV. Vela doesn't appear. Either
+   ch 8 needs Vela's POV, or the plant moves.")
+3. **Two or three concrete options** for resolving — including the
+   option of revising the **plan file** rather than the chapter. The
+   author has the right to modify the story at any point; that is the
+   core design principle of this pipeline. Your job is to surface the
+   problem cleanly so they can.
+4. **Wait** for the author to choose, rewrite, or overrule.
+
+Do **not** advance under "I'll just try my best and we'll see." If the
+author tells you to proceed despite a flag, proceed — but record the
+override in `notes/decisions.md` so it stays visible later.
+
+If everything checks out, say so explicitly ("consistency check clean
+— proceeding to draft") and continue.
 
 ### 3. Write the chapter
 
@@ -171,6 +229,11 @@ move on.
 
 ## Style guardrails (apply throughout)
 
+- **The Style guide section is binding.** Section 10 of the bundle is
+  this book's own `style.md` — a self-contained voice guide (copied from
+  the house template at book creation, then edited per book). Honor the
+  anti-cursi calibration in particular — underplay big feelings, no
+  emotional thesis statements, distrust the beautiful line.
 - **Voice & distance** match what `setup.md` declares (e.g., close
   third, past tense). If setup is silent, default to close third past.
 - **POV is constant within a chapter** unless setup declares

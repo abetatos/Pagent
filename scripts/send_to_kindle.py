@@ -66,6 +66,20 @@ def resolve_epub(args, env) -> Path | None:
     return None
 
 
+def build_subject(args, epub: Path) -> str:
+    """Kindle uses the subject as the document title hint. Append the latest
+    chapter number so re-sends are distinguishable (Send-to-Kindle never
+    replaces, it stacks copies). Falls back to the EPUB filename when unknown."""
+    if args.series_slug and args.book_number is not None:
+        bp = P.book_paths(args.series_slug, args.book_number)
+        title = setup_doc.book_title(setup_doc.load(bp.setup_md)) or args.series_slug
+        chapters = P.chapter_numbers(bp)
+        if chapters:
+            return f"{title} ({chapters[-1]:02d})"
+        return title
+    return epub.stem
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Send an EPUB to Kindle by email.")
     ap.add_argument("epub", nargs="?", help="Path to the .epub file.")
@@ -102,7 +116,7 @@ def main() -> int:
     msg = EmailMessage()
     msg["From"] = from_addr
     msg["To"] = to_addr
-    msg["Subject"] = epub.stem  # Kindle uses the subject as the doc title hint.
+    msg["Subject"] = build_subject(args, epub)  # title hint + chapter range.
     msg.set_content("Sent by Pagent.")
     msg.add_attachment(
         epub.read_bytes(),

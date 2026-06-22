@@ -89,7 +89,7 @@ chapters are written: `planned → planted → echoed-N → paid_off`.
 **Plant in:** 1
 **Echo in:** 9, 12
 **Payoff in:** 18
-**How to plant:** una vidriera en la Cúpula que Bruno ve de lejos en el primer capítulo. El Portaluz en luz violeta perfecta, con un pliegue de túnica improbable
+**How to plant:** en el ch 1, Bruno (en su aldea, a una semana de la Cúpula) ve la imagen del Portaluz reproducida a escala de aldea — una moneda gastada o una estampa pobre de la capilla. El Portaluz en luz violeta perfecta, con un pliegue de túnica improbable. La misma firma (el pliegue + la luz imposible) se repetirá idéntica en cada reproducción hasta el payoff del ch 18
 **How to pay off:** la aparición pública grande del Portaluz: Bruno reconoce el pliegue. La luz también. El lector entiende que es teatro
 **Status:** planned
 

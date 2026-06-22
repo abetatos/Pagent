@@ -14,7 +14,8 @@ Layered structure (in order):
     7. STORY SO FAR      — hierarchical summaries (acts + recent ch summaries)
     8. RECENT CHAPTERS   — last N-1 and N-2 in full
     9. CHAPTER BEAT      — the specific instruction for chapter N
-   10. REFERENCES        — dwelling techniques + anti-patterns (always)
+   10. STYLE GUIDE       — this book's own style.md (copied from the master)
+   11. REFERENCES        — dwelling techniques + anti-patterns (always)
 """
 
 from __future__ import annotations
@@ -40,6 +41,8 @@ def _section(title: str, body: str) -> str:
     if not body:
         return ""
     return f"# {title}\n\n{body}\n"
+
+
 
 
 def _list_canon_files(canon_dir: Path) -> list[Path]:
@@ -147,7 +150,31 @@ def build_context(paths: BookPaths, chapter: int) -> str:
         chapter_beat = f"(No outline section found for chapter {chapter}. The writer must lean on plan + shadow + setup.)"
     blocks.append(_section(f"Chapter {chapter} — beat sheet (your instruction)", chapter_beat))
 
-    # 10. References (anti-patterns + dwelling)
+    # 10. Style guide: this book's own style.md (self-contained; copied from
+    # references/style.md at book creation). Falls back to the master template
+    # only if the book somehow has no style.md yet.
+    style_text = _read(paths.style_md).strip() or _read(REFERENCES_DIR / "style.md").strip()
+    if style_text:
+        blocks.append(_section("Style guide (this book — apply throughout)", style_text))
+
+    # 10b. Conversation-memory notes: stable voice rules, author-declared
+    # style rules, and open questions. Persisted by update-canon /
+    # close-act so a fresh session writes a consistent voice without
+    # needing chat memory.
+    voice_text = _read(paths.voice_md).strip()
+    style_rules_text = _read(paths.style_rules_md).strip()
+    open_questions_text = _read(paths.open_questions_md).strip()
+    notes_parts: list[str] = []
+    if voice_text and "no observations yet" not in voice_text.lower():
+        notes_parts.append(f"## Voice notes (rolling — apply when writing each POV)\n\n{voice_text}\n")
+    if style_rules_text and "no rules declared yet" not in style_rules_text.lower():
+        notes_parts.append(f"## Style rules (author-declared)\n\n{style_rules_text}\n")
+    if open_questions_text and "no pendientes" not in open_questions_text.lower() and "(none yet)" not in open_questions_text.lower():
+        notes_parts.append(f"## Open questions (pendientes)\n\n{open_questions_text}\n")
+    if notes_parts:
+        blocks.append(_section("Conversation memory (persisted via checkpoint)", "\n".join(notes_parts)))
+
+    # 11. References (anti-patterns + dwelling)
     ref_parts = []
     for name in ("prose-antipatterns.md", "dwelling-techniques.md", "seed-craft.md"):
         ref_path = REFERENCES_DIR / name

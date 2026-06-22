@@ -6,13 +6,21 @@
 ## Bruno
 - **Role:** protagonista
 - **Physical (3 specifics):**
-  - **Su sombra cae mal.** Es ligeramente más corta de lo que debería y se
-    diluye en los bordes, como si una parte de la luz lo atravesara en
-    vez de pararse en él. Los marrones no llaman la atención y nadie mira
-    las sombras de los marrones; pero quien trabaja con luz como oficio
-    (Vela, las lectoras, los pintores, los maestros de vidriera) lo
-    detecta a los segundos. **Es su mayor riesgo de detección si se
-    infiltra en cualquier sitio donde mire alguien de luz.**
+  - **Su sombra cae mal — pero SOLO con luz rasante.** Con sol bajo y
+    largo (alba, ocaso, a la intemperie) su sombra es ligeramente más
+    corta de lo que debería y se diluye en los bordes, como si una parte
+    de la luz lo atravesara en vez de pararse en él — el vacío no detiene
+    la luz, la deshace. **A mediodía, con luz alta, o bajo techo, el
+    efecto es inapreciable.** De ahí que su Lectura al nacer —bajo techo,
+    con prisma— no lo cazara, y que haya pasado dieciocho años sin que
+    nadie lo note: los marrones no llaman la atención, nadie mira sus
+    sombras, y el defecto solo asoma con el momento y la luz justos.
+    **Además se ha ido agudizando con la Aceleración**, a la par que su
+    contención se debilita; de bebé era casi nada. Quien trabaja la luz
+    como oficio (Vela, las lectoras, los pintores, los maestros de
+    vidriera) lo caza en segundos *si la luz acompaña*. **Es su mayor
+    riesgo de detección.** (Coherencia: Doral lo ve al alba en ch 1;
+    Vela casi al atardecer en ch 2 — siempre con sombra larga.)
   - **Una cicatriz fina en forma de espiral en el pulpejo del pulgar
     izquierdo**, accidente de infancia con la rueca del telar. No es
     visible salvo si Bruno abre la palma — pero quedó registrada en su
@@ -123,11 +131,12 @@
   - **La voz** (que Bruno pierde como recuerdo luminoso en el
     midpoint, ch 13).
 - **Voice / vocabulary tics:** N/A (muerto al empezar; solo en memoria).
-- **Current location:** difunto. Lugar de muerte: TODO (la aldea natal,
-  causa natural; o ejecutado por la criba poco antes del libro). **La
-  decisión cambia el peso emocional del ch 1:** si murió hace años,
-  Bruno crece huérfano y resignado; si murió poco antes, Bruno empieza
-  el libro en duelo crudo.
+- **Current location:** difunto. **Murió hace años** (decisión cerrada):
+  Bruno creció huérfano y resignado, y el registro de apertura del ch 1
+  es supervivencia entrenada, no duelo crudo. El golpe agudo se reserva
+  para el ch 13, cuando Bruno pierde la voz del progenitor como recuerdo
+  luminoso — perderlo por segunda vez. Lugar/causa concreta de muerte:
+  TODO menor (no gating).
 - **Relationships:** Bruno (lo crió ocultando todo lo importante); Vela
   (la falla original de la criba — su Lectura de hace dieciocho años
   fue la que se le pasó).
@@ -142,17 +151,23 @@
   doblada como su padre le enseñó); el gesto y la voz son la memoria
   que perderá en el midpoint.
 
-## Mentor reformista (secundario, [PROPUESTA])
-- **Role:** quien capta a Bruno y lo mete en la Academia. Ironía estructural
-  — su esperanza descansa sobre la mentira que sostiene a Bruno.
-- **Physical (3 specifics):** TODO.
+## Doral, mentor reformista (secundario)
+- **Role:** jurista azul de circuito que capta a Bruno y lo mete en la
+  Academia. Ironía estructural — su esperanza descansa sobre la mentira
+  que sostiene a Bruno.
+- **Caste / faction:** **azul** (orden / ley = "ley de luz"); reformista en
+  circuito provincial por las apagadas (censo / cuotas de ordeño). Esa
+  ruta es la razón de que esté en Vega Parda el día del destello.
+- **Physical (3 specifics):** TODO (cerrar al escribir ch 1).
 - **Voice / vocabulary tics:** TODO — probable habla razonada, citas de
   reformistas pasados.
-- **Current location:** Academia.
-- **Current emotional state:** entusiasmo gestionable. Cree haber
-  encontrado un caso de estudio.
+- **Current location:** de circuito por las provincias apagadas (ch 1) →
+  Academia.
+- **Current emotional state:** entusiasmo gestionable. Tras el destello,
+  cree haber encontrado un caso de estudio.
 - **Relationships:** Bruno (le abre la puerta), Iglesia oficial (tensión).
-- **Magic relationship:** TODO — probable ciano de palacio o azul mayor.
+- **Magic relationship:** azul — orden, barreras, vínculos, ley. Don de
+  precisión, no de fuerza.
 - **Secrets they hold (writer-only):** ninguno grande. Es el personaje
   más limpio del libro y por eso el más fácil de quebrar.
-- **First appearance:** ch 2 o 3 (depende de §13.2).
+- **First appearance:** ch 1 (presencia el destello en Vega Parda).

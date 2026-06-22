@@ -9,6 +9,36 @@ You are running the **write-novel** skill. You are the conductor of the
 per-chapter pipeline. Each chapter goes through: write → critique →
 (fix if needed) → update-canon → (optional act compression).
 
+## Design philosophy — this pipeline is interactive, not autonomous
+
+The point of this repo is **not** to produce a book without the
+author's hands on it. The point is to make every chapter writable
+with discipline: the plan exists, the seeds are tracked, the canon
+is locked, the critique runs hard — so that the author can intervene
+*at any point* to revise the plan, change a seed, rewrite a beat, or
+stop and rethink the story.
+
+You are not a machine that ships chapters. You are a critical
+collaborator that:
+
+- **Halts at any sign of trouble**, not just at contract violations.
+  If a plot beat feels unmotivated, a seed feels telegraphed, a
+  character is suddenly inconsistent with their arc, or the chapter
+  about to be written contradicts the bible — **pause and report**
+  even if no rule is technically broken.
+- **Treats the plan as mutable.** The author can edit `setup.md`,
+  `plan/*`, `canon/*`, or the bible mid-pipeline. After any such
+  edit, rebuild context (`build_context.py` is idempotent) and
+  re-check before continuing.
+- **Surfaces what you would do differently.** When you finish a
+  chapter cleanly, also report the choices you made that *could*
+  have been made differently and why. The author can accept or
+  course-correct.
+
+`--autopilot` skips the per-chapter pause, but it does **not** skip
+adversarial flags. Even on autopilot, an unflagged story-logic
+problem halts the loop.
+
 ## When to invoke
 
 - "Write the book." / "Drive chapters 1 to N." / "Keep writing until
@@ -25,6 +55,10 @@ per-chapter pipeline. Each chapter goes through: write → critique →
   pause unconditionally — autopilot or not. The user must decide.
 - **Stop on contract drift.** If `update-canon` reports a seed missed,
   a canon contradiction, or a beat sheet gap, pause and report.
+- **Stop on smell.** If you notice anything that doesn't fit — even
+  if no skill flagged it — halt the loop and surface it. The
+  adversarial bias is at the orchestrator level too. Over-flag,
+  never under-flag.
 - **Honor the book length.** Stop at the chapter count declared in
   `setup.md`. Do not invent extra chapters.
 
@@ -92,9 +126,15 @@ Invoke `critique-chapter` for chapter M.
   whether to discuss, manually fix, or replan.
 
 #### 2e. Lock in
-Invoke `update-canon` for chapter M.
+Invoke `update-canon` for chapter M. This now **includes a mandatory
+checkpoint sub-step** that persists any ephemeral conversation state
+(voice observations, author-declared style rules, open threads) to
+disk. After it runs:
 
 - If it reports a seed missed or a canon contradiction → HARD STOP.
+- Otherwise it ends with the explicit signal `Safe to /clear before
+  chapter M+1`. Carry that signal through to the per-chapter summary
+  in 2f.
 
 #### 2f. Pause or continue
 Print a per-chapter summary:
@@ -103,17 +143,41 @@ Print a per-chapter summary:
 - Seeds advanced (ids and new statuses).
 - Canon files touched.
 - One-line carry-forward.
+- **Clear/compact signal:** mirror what update-canon said. If chapter
+  M closes an act, this becomes `STRONGLY recommended: close-act then
+  /clear before chapter M+1`.
 
 If NOT `--autopilot`: stop. Tell the user the next step is to type
 `continue` (or run write-novel again, or invoke `write-chapter <M+1>`
-directly).
+directly). Remind them about the /clear signal — if they're starting
+a fresh session for M+1, they should invoke `resume-act` first.
 
-If `--autopilot`: continue.
+If `--autopilot`: continue. **But honour close-act:** at act
+boundaries, `--autopilot` does the close-act step and then halts
+unconditionally — the user must start a new session with `/clear` +
+`resume-act` for the next act, because the conversation length would
+otherwise pass into the degradation zone.
 
-#### 2g. Act compression (auto)
+#### 2g. Close act (auto, at act boundaries)
 If chapter M is the last chapter of an act-window (every 7 by default;
-match `lib/summaries.py::DEFAULT_CHAPTERS_PER_ACT`), invoke
-`compress-act` for that act. Then continue.
+match `lib/summaries.py::DEFAULT_CHAPTERS_PER_ACT`), invoke `close-act`
+for that act. This is the **superset** of the older `compress-act`:
+besides bundling chapter summaries into an act summary, it also
+stabilises voice rules into `voice.md` and writes the
+`session-handoff.md` that the next session will read first.
+
+After close-act, **halt the autopilot loop**, regardless of mode. The
+session has reached its natural end. Tell the user:
+
+```
+✓ Act N closed. STRONGLY recommended: /clear before starting act N+1.
+Next session: run `resume-act` first.
+```
+
+If the user is in `--autopilot` and explicitly wants to continue
+without /clear, they can re-invoke `write-novel`; but the default is
+to stop here because the conversation length is approaching the
+degradation zone.
 
 ### 3. End-of-book handling
 

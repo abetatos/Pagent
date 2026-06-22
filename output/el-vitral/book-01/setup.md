@@ -7,6 +7,7 @@
 ## Identity
 
 - **Title:** El Apagado
+- **Autor:** Alejandro Betato
 - **Subgenre:** epic / grimdark (gótico, jerárquico, trágico)
 - **Series position:** book 1 of 3 — trilogía *el Vitral*
 - **Writing language:** es
@@ -343,14 +344,28 @@ Ver `canon/characters.md` para fichas y `plan/arcs.md` para arcos.
 - **Voice:** close third, multi-POV (un POV por capítulo)
 - **Distance:** intimate cuando es Bruno; estándar cuando es Vela; estándar
   con destellos íntimos cuando es Yedra.
-- **Register:** literario con tono litúrgico para los rituales de luz;
-  cotidiano y áspero para las escenas campesinas. Sin pulpa.
+- **Register:** sobrio y directo. Tono litúrgico SOLO en los rituales de
+  luz; cotidiano y áspero en las escenas campesinas. "Literario" aquí
+  significa prosa limpia y concreta, **no** prosa amanerada. Sin pulpa.
+- **Narrador (regla dura — el autor lo pidió explícitamente):** contar la
+  historia de forma llana. **Prohibido el narrador aforístico.** Nada de
+  frases-sentencia ni máximas generales ("para hacer X hay que creer Y",
+  "las cosas de los muertos pesan más en…"), nada de cascadas de
+  causa-efecto encadenadas con *y… y… y…* (polisíndeton), nada de
+  epigramas construidos ni de narrador que filosofa. Las frases breves de
+  Bruno son voz seca y concreta, NO interludios sapienciales. Si una
+  frase suena a cita de libro de citas, va fuera. **Un recurso literario
+  puntual y bien medido está permitido** (una imagen, un giro) — lo que
+  se prohíbe es el amaneramiento sostenido: que el narrador se luzca en
+  vez de contar. Por defecto, llano; el adorno, la excepción.
 - **Desired tics:** sinestesia color↔sonido en los rituales; verbos
   artesanales (clavar, doblar, recoser); descripciones por la mano y el
-  oído antes que por la vista.
+  oído antes que por la vista. Emoción mostrada por acción y objeto, no
+  enunciada por el narrador.
 - **Forbidden tics:** "tapices de", "etéreo", "delvear"; rhetoric de
   elegido; listas X, Y, Z; monólogos internos sobre el tema al cerrar
-  capítulo.
+  capítulo; **aforismos del narrador y cascadas *y… y… y…* (ver regla
+  dura arriba)**.
 
 ## If continuation (book 2+ of a series)
 
