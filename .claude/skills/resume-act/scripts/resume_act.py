@@ -38,6 +38,44 @@ def _read(p: Path) -> str:
     return p.read_text(encoding="utf-8") if p.exists() else ""
 
 
+def _has_content(p: Path, min_chars: int = 50) -> bool:
+    """True if the file exists and holds more than a stub of real content."""
+    if not p.exists():
+        return False
+    return len(p.read_text(encoding="utf-8").strip()) >= min_chars
+
+
+def detect_phase(paths, last_written: int, next_ch):
+    """Where in the lifecycle this book is, as a (phase, next_command) pair.
+
+    Drives the dispatcher menu in the SKILL. The phases are linear and the
+    critiques are MANDATORY gates, not optional:
+
+      setup         -> book-setup        (no usable setup.md yet)
+      plan          -> plan-book         (setup ready, plan/canon missing)
+      critique-plan -> critique-plan     (plan exists, never audited, ch1 not written)
+      write         -> write-novel       (plan audited; drive the next chapter)
+      done          -> (none)            (all chapters written)
+    """
+    plan_ready = all(
+        _has_content(p)
+        for p in (paths.outline_md, paths.shadow_md, paths.seeds_md, paths.arcs_md)
+    ) and _has_content(paths.canon_file("characters"))
+    plan_critiqued = _has_content(paths.notes_dir / "critique-plan.md")
+
+    if not _has_content(paths.setup_md):
+        return "setup", "book-setup"
+    if not plan_ready:
+        return "plan", "plan-book"
+    # critique-plan is a hard gate, but only before chapter 1 — once writing
+    # has begun the plan is already proven in use, so don't loop back to it.
+    if not plan_critiqued and last_written == 0:
+        return "critique-plan", "critique-plan"
+    if next_ch is not None:
+        return "write", "write-novel"
+    return "done", None
+
+
 def _extract_stable_rules(voice_text: str) -> str:
     """Pull every `### Stable rules ...` block out of voice.md."""
     if not voice_text:
@@ -156,12 +194,37 @@ def main() -> int:
             print("\n---\n## What just happened (last update)\n")
             print(snippet)
 
-    print("\n---")
-    if next_ch:
-        print(f"\n**Ready for `write-chapter {next_ch}`.**")
-        print(f"\n*Reminder: the chapter writer will pull the full bundle via build_context.py — no need to load anything more manually.*")
-    else:
-        print(f"\n**Book complete.** Next: refresh book-summary, then `book-setup` for book {args.book_number + 1} if series continues.")
+    # Dispatcher: detect the lifecycle phase and recommend the next skill.
+    phase, nxt = detect_phase(paths, last_written, next_ch)
+    blocked = bool(pendientes)
+
+    print("\n---\n## Next step (dispatcher)\n")
+    if phase == "setup":
+        print("**Phase: SETUP** — no usable `setup.md` yet.")
+        print("\nRecommended: **book-setup** — interactive intake to define the book.")
+    elif phase == "plan":
+        print("**Phase: PLAN** — `setup.md` ready, but `plan/` + initial `canon/` are missing.")
+        print("\nRecommended: **plan-book** — regenerate the plan and canon from `setup.md`.")
+        print("\n> After plan-book, **critique-plan runs ALWAYS** before chapter 1.")
+    elif phase == "critique-plan":
+        print("**Phase: CRITIQUE-PLAN** — plan exists but has never been audited.")
+        print("\nRecommended: **critique-plan** — mandatory gate before writing chapter 1.")
+    elif phase == "write":
+        print(f"**Phase: WRITE** — plan is ready. Next is **chapter {next_ch}** (act {next_act}).")
+        print(f"\nRecommended: **write-novel** — drives chapter {next_ch} end-to-end "
+              "(plan-chapter → write → critique [ALWAYS] → update-canon), then stops for `/clear`.")
+    else:  # done
+        print(f"**Phase: DONE** — all {total_chapters} chapters written.")
+        print(f"\nRecommended: refresh book-summary, then `book-setup` for book "
+              f"{args.book_number + 1} if the series continues.")
+
+    if blocked and phase == "write":
+        print("\n> ⚠ Blocking pendientes exist (see above). Resolve them BEFORE the next chapter.")
+
+    # Machine-readable marker for the dispatcher menu in SKILL.md.
+    nch = next_ch if (phase == "write" and next_ch) else ""
+    print(f"\n<!-- DISPATCH phase={phase} next={nxt or 'none'} "
+          f"next_chapter={nch} blocked={'1' if blocked else '0'} -->")
 
     return 0
 
